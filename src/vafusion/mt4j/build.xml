@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<project default="create_run_jar" name="Create Runnable Jar for Project VAFusion with Jar-in-Jar Loader">
+    <!--this file was created by Eclipse Runnable JAR Export Wizard-->
+    <!--ANT 1.7 is required                                        -->
+    <target name="create_run_jar">
+        <jar destfile="/home/arjun/tmp/src/VAFusion/src/vafusion/mt4j/LinuxHIDDaemon.jar">
+            <manifest>
+                <attribute name="Main-Class" value="org.eclipse.jdt.internal.jarinjarloader.JarRsrcLoader"/>
+                <attribute name="Rsrc-Main-Class" value="vafusion.mt4j.LinuxHIDDaemon"/>
+                <attribute name="Class-Path" value="."/>
+                <attribute name="Rsrc-Class-Path" value="./ jMusic1.6.02.jar core.jar mri.jar muito_blobtracking.jar batik-anim.jar batik-awt-util.jar batik-bridge.jar batik-css.jar batik-dom.jar batik-ext.jar batik-extension.jar batik-gvt.jar batik-parser.jar batik-script.jar batik-svg-dom.jar batik-svggen.jar batik-transcoder.jar batik-util.jar batik-xml.jar js.jar pdf-transcoder.jar xml-apis.jar xml-apis-ext.jar commons-collections-3.1.jar commons-logging.jar concurrent-1.3.4.jar junit-3.8.1.jar log4j-1.2.8.jar whirlycache-1.0.1.jar jogl.jar libTUIO.jar flickrj.jar MSAFluid.jar modestMaps.jar gluegen-rt.jar jbox2d.jar waterScene.jar jna-3.1.0.jar gstreamer-java-bin-1.2.jar gsvideo06pre.jar opengl.jar GlulogicMT.jar neuroph-2.5b.jar hsqldb.jar junit-4.6.jar JOCL-0.1.3a-beta.jar slf4j-api-1.6.1.jar slf4j-jdk14-1.6.1.jar"/>
+            </manifest>
+            <zipfileset src="jar-in-jar-loader.zip"/>
+            <fileset dir="/home/arjun/tmp/src/VAFusion/bin"/>
+            <zipfileset dir="/home/arjun/tmp/src/VAFusion" includes="jMusic1.6.02.jar"/>
+            <fileset dir="/home/arjun/src/VAFusion/MT4j/bin"/>
+            <zipfileset dir="/home/arjun/src/VAFusion/MT4j/mt4jLibs" includes="core.jar"/>
+            <zipfileset dir="/home/arjun/src/VAFusion/MT4j/mt4jLibs" includes="mri.jar"/>
+            <zipfileset dir="/home/arjun/src/VAFusion/MT4j/mt4jLibs" includes="muito_blobtracking.jar"/>
+            <zipfileset dir="/home/arjun/src/VAFusion/MT4j/mt4jLibs/batik" includes="batik-anim.jar"/>
+            <zipfileset dir="/home/arjun/src/VAFusion/MT4j/mt4jLibs/batik" includes="batik-awt-util.jar"/>
+            <zipfileset dir="/home/arjun/src/VAFusion/MT4j/mt4jLibs/batik" includes="batik-bridge.jar"/>
+            <zipfileset dir="/home/arjun/src/VAFusion/MT4j/mt4jLibs/batik" includes="batik-css.jar"/>
+            <zipfileset dir="/home/arjun/src/VAFusion/MT4j/mt4jLibs/batik" includes="batik-dom.jar"/>
+            <zipfileset dir="/home/arjun/src/VAFusion/MT4j/mt4jLibs/batik" includes="batik-ext.jar"/>
+            <zipfileset dir="/home/arjun/src/VAFusion/MT4j/mt4jLibs/batik" includes="batik-extension.jar"/>
+            <zipfileset dir="/home/arjun/src/VAFusion/MT4j/mt4jLibs/batik" includes="batik-gvt.jar"/>
+            <zipfileset dir="/home/arjun/src/VAFusion/MT4j/mt4jLibs/batik" includes="batik-parser.jar"/>
+            <zipfileset dir="/home/arjun/src/VAFusion/MT4j/mt4jLibs/batik" includes="batik-script.jar"/>
+            <zipfileset dir="/home/arjun/src/VAFusion/MT4j/mt4jLibs/batik" includes="batik-svg-dom.jar"/>
+            <zipfileset dir="/home/arjun/src/VAFusion/MT4j/mt4jLibs/batik" includes="batik-svggen.jar"/>
+            <zipfileset dir="/home/arjun/src/VAFusion/MT4j/mt4jLibs/batik" includes="batik-transcoder.jar"/>
+            <zipfileset dir="/home/arjun/src/VAFusion/MT4j/mt4jLibs/batik" includes="batik-util.jar"/>
+            <zipfileset dir="/home/arjun/src/VAFusion/MT4j/mt4jLibs/batik" includes="batik-xml.jar"/>
+            <zipfileset dir="/home/arjun/src/VAFusion/MT4j/mt4jLibs/batik" includes="js.jar"/>
+            <zipfileset dir="/home/arjun/src/VAFusion/MT4j/mt4jLibs/batik" includes="pdf-transcoder.jar"/>
+            <zipfileset dir="/home/arjun/src/VAFusion/MT4j/mt4jLibs/batik" includes="xml-apis.jar"/>
+            <zipfileset dir="/home/arjun/src/VAFusion/MT4j/mt4jLibs/batik" includes="xml-apis-ext.jar"/>
+            <zipfileset dir="/home/arjun/src/VAFusion/MT4j/mt4jLibs/whirlylib" includes="commons-collections-3.1.jar"/>
+            <zipfileset dir="/home/arjun/src/VAFusion/MT4j/mt4jLibs/whirlylib" includes="commons-logging.jar"/>
+            <zipfileset dir="/home/arjun/src/VAFusion/MT4j/mt4jLibs/whirlylib" includes="concurrent-1.3.4.jar"/>
+            <zipfileset dir="/home/arjun/src/VAFusion/MT4j/mt4jLibs/whirlylib" includes="junit-3.8.1.jar"/>
+            <zipfileset dir="/home/arjun/src/VAFusion/MT4j/mt4jLibs/whirlylib" includes="log4j-1.2.8.jar"/>
+            <zipfileset dir="/home/arjun/src/VAFusion/MT4j/mt4jLibs/whirlylib" includes="whirlycache-1.0.1.jar"/>
+            <zipfileset dir="/home/arjun/src/VAFusion/MT4j/mt4jLibs/jogl" includes="jogl.jar"/>
+            <zipfileset dir="/home/arjun/src/VAFusion/MT4j/mt4jLibs/tuio" includes="libTUIO.jar"/>
+            <zipfileset dir="/home/arjun/src/VAFusion/MT4j/examples/advanced/flickrMT/lib" includes="flickrj.jar"/>
+            <zipfileset dir="/home/arjun/src/VAFusion/MT4j/examples/advanced/fluidSimulator/lib" includes="MSAFluid.jar"/>
+            <zipfileset dir="/home/arjun/src/VAFusion/MT4j/examples/advanced/modestMapsMT/lib" includes="modestMaps.jar"/>
+            <zipfileset dir="/home/arjun/src/VAFusion/MT4j/mt4jLibs/jogl" includes="gluegen-rt.jar"/>
+            <zipfileset dir="/home/arjun/src/VAFusion/MT4j/examples/advanced/physics/lib" includes="jbox2d.jar"/>
+            <zipfileset dir="/home/arjun/src/VAFusion/MT4j/examples/advanced/water/lib" includes="waterScene.jar"/>
+            <zipfileset dir="/home/arjun/src/VAFusion/MT4j/mt4jLibs/gsvideo" includes="jna-3.1.0.jar"/>
+            <zipfileset dir="/home/arjun/src/VAFusion/MT4j/mt4jLibs/gsvideo" includes="gstreamer-java-bin-1.2.jar"/>
+            <zipfileset dir="/home/arjun/src/VAFusion/MT4j/mt4jLibs/gsvideo" includes="gsvideo06pre.jar"/>
+            <zipfileset dir="/home/arjun/src/VAFusion/MT4j/mt4jLibs/jogl" includes="opengl.jar"/>
+            <zipfileset dir="/home/arjun/src/VAFusion/MT4j/mt4jLibs" includes="GlulogicMT.jar"/>
+            <zipfileset dir="/home/arjun/tmp/src/VAFusion/neuroph-2.5b" includes="neuroph-2.5b.jar"/>
+            <fileset dir="/home/arjun/tmp/src/VAFusion/encog-java-core-2.5.3/bin"/>
+            <zipfileset dir="/home/arjun/tmp/src/VAFusion/encog-java-core-2.5.3/jar" includes="hsqldb.jar"/>
+            <zipfileset dir="/home/arjun/tmp/src/VAFusion/encog-java-core-2.5.3/jar" includes="junit-4.6.jar"/>
+            <zipfileset dir="/home/arjun/tmp/src/VAFusion/encog-java-core-2.5.3/jar" includes="JOCL-0.1.3a-beta.jar"/>
+            <zipfileset dir="/home/arjun/tmp/src/VAFusion/encog-java-core-2.5.3/jar" includes="slf4j-api-1.6.1.jar"/>
+            <zipfileset dir="/home/arjun/tmp/src/VAFusion/encog-java-core-2.5.3/jar" includes="slf4j-jdk14-1.6.1.jar"/>
+        </jar>
+    </target>
+</project>

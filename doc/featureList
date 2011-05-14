@@ -1,0 +1,26 @@
+Two modes:
+piano - input
+staff edit
+
+piano mode:
+on-screen keyboard
+notes play when keys are pressed
+ability to record input (notes)
+recordings associate notes with rhythm
+rhythm can be set ahead of time
+if they are, the input's rhythm is ignored, if not, the rhythm is discerned from play
+keyboard range can be adjusted (how many keys are shown)
+ability to edit recently entered phrases, scroll through with gesture
+
+Staff Editor:
+note entry - draw simple characters, ocr; adjust pitch offset (ledger lines)
+select phrase to vies in phrase editor / for playback
+three panes: note entry, phrase editor, and overall view
+overall view: zoom in/out, add tempo/key changes
+phrase view: select note, adjust pitch, rhythm, accents, select multiple notes, addslurs, triplets, ties
+part support
+
+I/O from MIDI files
+specific file type? our own, finale, etc?
+support playback of current score
+export to mp3, flac, etc
