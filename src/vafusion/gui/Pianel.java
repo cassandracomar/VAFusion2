@@ -4,6 +4,8 @@ package vafusion.gui;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
 import java.util.HashMap;
 
 import javax.swing.JButton;
@@ -23,20 +25,23 @@ import vafusion.inst.PluckInst;
 @SuppressWarnings("serial")
 public class Pianel extends JFrame implements JMC {
     
-    public static void main(String args[]) {
+    public static void main(String args[]) throws InterruptedException {
     
         Pianel pianel = new Pianel(0, 8);
+        while(pianel.running) Thread.sleep(1000);
+        pianel.shutdown();
     
     }
 
-    private PianoComponent pianoComponent;
-    private StaffComponent staff;
-    private CharacterRecognitionComponent charRecog;
+    PianoComponent pianoComponent;
+    public StaffComponent staff;
+    public CharacterRecognitionComponent charRecog;
     private Phrase wholePhrase;
     private int offset, xOffset, yOffset;
     boolean blackPattern[] = {true, true, false, true, true, true, false, false};
     double twoThirds = (double)2/3;
     double oneThird = (double)1/3;
+    boolean running = true;
     
     Score recordedScore = new Score();
     Phrase recordedPhrase = new Phrase();
@@ -158,7 +163,7 @@ public class Pianel extends JFrame implements JMC {
         
         spring.putConstraint(SpringLayout.SOUTH, showScore, 0, SpringLayout.SOUTH, getContentPane());
         spring.putConstraint(SpringLayout.HORIZONTAL_CENTER, showScore, 0, SpringLayout.HORIZONTAL_CENTER, getContentPane());
-		
+	
 	}
 
     Pianel(int offset, int numKeys) {
@@ -170,59 +175,76 @@ public class Pianel extends JFrame implements JMC {
         
         this.wholePhrase = new Phrase();
         //this.piano = new Piano(height/2, width, numKeys);
-        this.pianoComponent = new PianoComponent(xOffset, yOffset, width, height / 2);
+        this.pianoComponent = new PianoComponent(xOffset, yOffset, width, height / 2, this);
+        //this.pianoComponent.setBounds(xOffset, yOffset, width, height/2);
         yOffset += 50;
         this.staff = new StaffComponent(xOffset, yOffset + height/2, width, height / 2);
         this.pianoComponent.setScore(this.staff.getScore());
-        xOffset += staff.getRealWidth() + 20;
+        xOffset += staff.getRealWidth() + 40;
         yOffset += height / 2;
         this.charRecog = new CharacterRecognitionComponent(xOffset, yOffset, staff.getScore());
         
-        if(true) {
-	        staff.getScore().addNote(new jm.music.data.Note(70, 4));
-	        staff.getScore().addNote(new jm.music.data.Note(61, 4));
-	        staff.getScore().addNote(new jm.music.data.Note(70, 4));
-	        staff.getScore().addNote(new jm.music.data.Note(70, 4));
-	        staff.getScore().addNote(new jm.music.data.Note(70, 4));
-	        staff.getScore().addNote(new jm.music.data.Note(70, 4));
-	        staff.getScore().addNote(new jm.music.data.Note(70, 4));
-	        staff.getScore().addNote(new jm.music.data.Note(70, 4));
-	        staff.getScore().addNote(new jm.music.data.Note(70, 4));
-	        staff.getScore().addNote(new jm.music.data.Note(70, 4));
-	        staff.getScore().addNote(new jm.music.data.Note(70, 4));
-	        staff.getScore().addNote(new jm.music.data.Note(70, 4));
-	        staff.getScore().addNote(new jm.music.data.Note(70, 4));
-	        staff.getScore().addNote(new jm.music.data.Note(70, 4));
-	        staff.getScore().addNote(new jm.music.data.Note(70, 4));
-	        staff.getScore().addNote(new jm.music.data.Note(70, 4));
-	        staff.getScore().addNote(new jm.music.data.Note(70, 4));
-	        staff.getScore().addNote(new jm.music.data.Note(70, 4));
-	        staff.getScore().addNote(new jm.music.data.Note(70, 4));
-	        staff.getScore().addNote(new jm.music.data.Note(70, 4));
-	        staff.getScore().addNote(new jm.music.data.Note(70, 4));
-	        staff.getScore().addNote(new jm.music.data.Note(70, 4));
-	        staff.getScore().addNote(new jm.music.data.Note(70, 4));
-	        staff.getScore().addNote(new jm.music.data.Note(70, 4));
-	        staff.getScore().addNote(new jm.music.data.Note(70, 4));
-	        staff.getScore().addNote(new jm.music.data.Note(70, 4));
-	        staff.getScore().addNote(new jm.music.data.Note(70, 4));
-	        staff.getScore().addNote(new jm.music.data.Note(70, 4));
-	        staff.getScore().addNote(new jm.music.data.Note(70, 4));
-	        staff.getScore().addNote(new jm.music.data.Note(70, 4));
-	        staff.getScore().addNote(new jm.music.data.Note(70, 4));
-	        staff.getScore().addNote(new jm.music.data.Note(70, 4));
-        }
+//        if(true) {
+//	        staff.getScore().addNote(new jm.music.data.Note(70, 4));
+//	        staff.getScore().addNote(new jm.music.data.Note(61, 4));
+//	        staff.getScore().addNote(new jm.music.data.Note(70, 4));
+//	        staff.getScore().addNote(new jm.music.data.Note(70, 4));
+//	        staff.getScore().addNote(new jm.music.data.Note(70, 4));
+//	        staff.getScore().addNote(new jm.music.data.Note(70, 4));
+//	        staff.getScore().addNote(new jm.music.data.Note(70, 4));
+//	        staff.getScore().addNote(new jm.music.data.Note(70, 4));
+//	        staff.getScore().addNote(new jm.music.data.Note(70, 4));
+//	        staff.getScore().addNote(new jm.music.data.Note(70, 4));
+//	        staff.getScore().addNote(new jm.music.data.Note(70, 4));
+//	        staff.getScore().addNote(new jm.music.data.Note(70, 4));
+//	        staff.getScore().addNote(new jm.music.data.Note(70, 4));
+//	        staff.getScore().addNote(new jm.music.data.Note(70, 4));
+//	        staff.getScore().addNote(new jm.music.data.Note(70, 4));
+//	        staff.getScore().addNote(new jm.music.data.Note(70, 4));
+//	        staff.getScore().addNote(new jm.music.data.Note(70, 4));
+//	        staff.getScore().addNote(new jm.music.data.Note(70, 4));
+//	        staff.getScore().addNote(new jm.music.data.Note(70, 4));
+//	        staff.getScore().addNote(new jm.music.data.Note(70, 4));
+//	        staff.getScore().addNote(new jm.music.data.Note(70, 4));
+//	        staff.getScore().addNote(new jm.music.data.Note(70, 4));
+//	        staff.getScore().addNote(new jm.music.data.Note(70, 4));
+//	        staff.getScore().addNote(new jm.music.data.Note(70, 4));
+//	        staff.getScore().addNote(new jm.music.data.Note(70, 4));
+//	        staff.getScore().addNote(new jm.music.data.Note(70, 4));
+//	        staff.getScore().addNote(new jm.music.data.Note(70, 4));
+//	        staff.getScore().addNote(new jm.music.data.Note(70, 4));
+//	        staff.getScore().addNote(new jm.music.data.Note(70, 4));
+//	        staff.getScore().addNote(new jm.music.data.Note(70, 4));
+//	        staff.getScore().addNote(new jm.music.data.Note(70, 4));
+//	        staff.getScore().addNote(new jm.music.data.Note(70, 4));
+//        }
         
+        this.pianoComponent.setBounds(20, 0, width, height/2);
+        this.staff.setBounds(20, 50, width, height /2);
+        this.charRecog.setBounds(60 + staff.getWidth(), 110 + height / 2, 512, 147);
         makeRecordingButton();
         makeScoreButton();
         prepRhythms();
         setupLayout();
+        pianoComponent.addMouseMotionListener(charRecog.createMouseMotionListener());
+        
+        System.out.println("Piano Component: x: " + pianoComponent.getX() + " y: " + pianoComponent.getY() +
+        		" width: " + pianoComponent.getWidth() + " height: " + pianoComponent.getHeight());
 
+        System.out.println("Staff Component: x: " + staff.getX() + " y: " + staff.getY() +
+        		" width: " + staff.getWidth() + " height: " + staff.getHeight());
+        
+        System.out.println("charRecog Component: x: " + charRecog.getX() + " y: " + charRecog.getY() +
+        		" width: " + charRecog.getWidth() + " height: " + charRecog.getHeight());
+        
+        
         // Display the frame
-        int frameWidth = 800;
-        int frameHeight = 800;
+        int frameWidth = 1920;
+        int frameHeight = 1200;
         this.setSize(frameWidth, frameHeight);
         this.setVisible(true);
+        
+       
     }
 
     public static Pianel createPianel(int offset, int numKeys) {

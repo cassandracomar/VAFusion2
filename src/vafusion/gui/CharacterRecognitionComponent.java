@@ -18,9 +18,11 @@ import vafusion.recog.CharacterRecognizer;
 @SuppressWarnings("serial")
 public class CharacterRecognitionComponent extends RecognitionComponent implements Runnable {
 	volatile int[][] pixels;
-	final int height = 147, width = 512; //enforced by neural network size
+	final int height = 147, width = 256; //enforced by neural network size
 	int x, y;
 	boolean running = true;
+	long time = System.currentTimeMillis();
+	CharacterRecognizer charRecog;
 
 	private Score score;
 	public CharacterRecognitionComponent(int xOff, int yOff, Score s) {
@@ -40,6 +42,7 @@ public class CharacterRecognitionComponent extends RecognitionComponent implemen
 		this.setPreferredSize(new Dimension(width, height));
 		
 		recog = new CharacterRecognizer("char_recog.network");
+		charRecog = (CharacterRecognizer)recog;
 		score = s;
 		Thread t = new Thread(this);
 		t.start();
@@ -49,26 +52,41 @@ public class CharacterRecognitionComponent extends RecognitionComponent implemen
 	@Override
 	public void paint(Graphics g) {
 		
+		this.x = getX();
+		this.y = getY();
+		//System.out.println("charRecog location: x: " + this.x + " y: " + this.y);
+		//this.width = getWidth();
+		//this.height = getHeight();
 		Graphics2D g2d = (Graphics2D)g;
 		g2d.setColor(Color.WHITE);
-		g2d.fillRect(this.x, this.y, this.width, this.height);
+		g2d.fillRect(0, 0, this.width, this.height);
 		g2d.setColor(Color.BLACK);
-		g2d.drawRect(this.x, this.y, this.width, this.height);
+		g2d.drawRect(0, 0, this.width, this.height);
 		
 		draw(g2d);
 		
 	}
 	
-	private MouseMotionListener createMouseMotionListener() {
-		
+	public MouseMotionListener createMouseMotionListener() {
+		final CharacterRecognitionComponent temp = this;
+
 		return new MouseMotionListener() {
 
 			@Override
-			public void mouseDragged(MouseEvent e) {
+			public void mouseDragged(MouseEvent arg0) {
 				
-				System.out.println("mouse drag detected");
-				pixels[e.getX()][e.getY()] = 1;
-				
+				if(arg0.getX() <= temp.x + temp.width && arg0.getY() <= temp.y + temp.height 
+						&& arg0.getX() >= temp.x && arg0.getY() >= temp.y) {
+					System.out.println("mouse drag (charRecog): x: " + arg0.getX() + " y: " + arg0.getY());
+					System.out.println("component location: x0: " + temp.x + " y0: " + temp.y 
+							+ " x1: " + (temp.x + temp.width) + " y1: " + (temp.y + temp.height));
+					temp.pixels[arg0.getX() - temp.x][arg0.getY() - temp.y] = 1;
+					time = System.currentTimeMillis();
+					//temp.notify();
+					temp.repaint();
+					
+				}
+
 			}
 
 			@Override
@@ -78,7 +96,7 @@ public class CharacterRecognitionComponent extends RecognitionComponent implemen
 		
 	}
 	
-	private MouseListener createMouseListener() {
+	public MouseListener createMouseListener() {
 		final CharacterRecognitionComponent temp = this;
 		
 		return new MouseListener() {
@@ -95,9 +113,18 @@ public class CharacterRecognitionComponent extends RecognitionComponent implemen
 			@Override
 			public void mousePressed(MouseEvent arg0) {
 				
-				System.out.println("mouse click detected!");
-				pixels[arg0.getX()][arg0.getY()] = 1;
-				temp.notify();
+				
+				if(arg0.getX() <= temp.x + temp.width && arg0.getY() <= temp.y + temp.height 
+						&& arg0.getX() >= temp.x && arg0.getY() >= temp.y) {
+					System.out.println("mouse press (charRecog): x: " + arg0.getX() + " y: " + arg0.getY());
+					System.out.println("component location: x0: " + temp.x + " y0: " + temp.y 
+							+ " x1: " + (temp.x + temp.width) + " y1: " + (temp.y + temp.height));
+					temp.pixels[arg0.getX() - temp.x][arg0.getY() - temp.y] = 10;
+					time = System.currentTimeMillis();
+					//temp.notify();
+					temp.repaint();
+					
+				}
 				
 			}
 
@@ -137,8 +164,11 @@ public class CharacterRecognitionComponent extends RecognitionComponent implemen
 		 */
 		for(int x = 0; x < width; x++)
 			for(int y = 0; y < height; y++)				
-				if(pixels[x][y] != 0)
-					g2d.draw(new Line2D.Double(x + this.x, y + this.y, x + this.x, y + this.y));		
+				if(pixels[x][y] != 0) {
+					//System.out.println("draw point (char recog): x: " + x + " y: " + y);
+					g2d.fillOval(x + 10, y - 10, 10, 10);
+					//g2d.draw(new Line2D.Double(x + this.x, y + this.y, x + this.x + 1, y + this.y + 1));
+				}
 		
 	}
 
@@ -146,24 +176,23 @@ public class CharacterRecognitionComponent extends RecognitionComponent implemen
 	public void run() {
 		
 		while(running) {
-			try {
-				this.wait(10);
-				vafusion.recog.Character c = (vafusion.recog.Character)recog.match(getImage());
-
-				Note n;
-				if(c.isRest())
-					n = new Note(Note.REST, c.getRhythmValue());
-				else
-					n = new Note(Note.DEFAULT_PITCH, c.getRhythmValue());
-				
-				if(c.getRhythmValue() != 0)
-					score.addNote(n);
-			
-			} catch (InterruptedException e) {
+			if(System.currentTimeMillis() - time < 10000)
 				continue;
-			}
 			
+//			for(int i = 0; i < pixels.length; i++) {
+//				for(int j = 0; j < pixels[0].length; j++)
+//					System.out.print(pixels[i][j] + " ");
+//				System.out.println();
+//			}
+			
+			vafusion.recog.Character c = charRecog.match(getImage());
+			System.out.println(c);
 			clear();
+			try {
+				Thread.sleep(1000);
+			} catch (InterruptedException e) {
+				e.printStackTrace();
+			}
 		}
 		
 	}
@@ -179,6 +208,8 @@ public class CharacterRecognitionComponent extends RecognitionComponent implemen
 		for(int i = 0; i < width; i++)
 			for(int j = 0; j < height; j++)
 				pixels[i][j] = 0;
+		
+		repaint();
 		
 	}
 	

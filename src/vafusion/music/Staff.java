@@ -64,7 +64,7 @@ public class Staff {
 	public void update() {
 		
 		int currX = this.staffData.getX();
-		System.out.println(measures.size());
+		//System.out.println(measures.size());
 		for(Measure m : measures) {
 			
 			m.update(currX, staffData.getY(), this.height);
