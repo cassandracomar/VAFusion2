@@ -104,34 +104,34 @@ public class PianoComponent extends JComponent{
 		Graphics2D g2d = (Graphics2D) g;
 		
 		g2d.setColor(Color.WHITE);
-        g2d.fillRect(piano.getX(), piano.getY(), piano.getWidth(), piano.getHeight());
-        g2d.setColor(Color.black);
-        
-        for(KeyComponent k : piano.getWhiteKeys()){
-        	k.paint(g2d);
-        }
-        
-        for(KeyComponent k : piano.getBlackKeys()){
-        	k.paint(g2d);
-        }
-        
-        if(!piano.getCurrentChord().isEmpty()) {
-            CPhrase chord = new CPhrase();
-            chord.addChord(piano.getCurrentChord().toArray(new Note[0]));
-            Part p = new Part("Piano", 0, 0);
-            p.addCPhrase(chord);
-            Instrument[] insts = new PluckInst[1];
-            insts[0] = new PluckInst(2000);	            
-            Score s = new Score(p);
-            
-            try {
-            	Play.midi(s, false);
-            } catch(IllegalThreadStateException e) {
-            	
-            	piano.getCurrentChord().removeAll(piano.getCurrentChord());
-            	
-            }
-        }
+		g2d.fillRect(piano.getX(), piano.getY(), piano.getWidth(), piano.getHeight());
+		g2d.setColor(Color.black);
+		
+		for(KeyComponent k : piano.getWhiteKeys()){
+			k.paint(g2d);
+		}
+		
+		for(KeyComponent k : piano.getBlackKeys()){
+			k.paint(g2d);
+		}
+		
+		if(!piano.getCurrentChord().isEmpty()) {
+		    CPhrase chord = new CPhrase();
+		    chord.addChord(piano.getCurrentChord().toArray(new Note[0]));
+		    Part p = new Part("Piano", 0, 0);
+		    p.addCPhrase(chord);
+		    Instrument[] insts = new PluckInst[1];
+		    insts[0] = new PluckInst(2000);	            
+		    Score s = new Score(p);
+		    
+		    try {
+		    	Play.midi(s, false);
+		    } catch(IllegalThreadStateException e) {
+		    	
+		    	piano.getCurrentChord().removeAll(piano.getCurrentChord());
+		    	
+		    }
+		}
 	}
 	
 	public vafusion.data.Piano getPiano(){
