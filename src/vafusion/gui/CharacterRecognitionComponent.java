@@ -22,6 +22,7 @@ public class CharacterRecognitionComponent extends RecognitionComponent implemen
 	int x, y;
 	boolean running = true;
 	long time = System.currentTimeMillis();
+	CharacterRecognizer charRecog;
 
 	private Score score;
 	public CharacterRecognitionComponent(int xOff, int yOff, Score s) {
@@ -41,6 +42,7 @@ public class CharacterRecognitionComponent extends RecognitionComponent implemen
 		this.setPreferredSize(new Dimension(width, height));
 		
 		recog = new CharacterRecognizer("char_recog.network");
+		charRecog = (CharacterRecognizer)recog;
 		score = s;
 		Thread t = new Thread(this);
 		t.start();
@@ -182,6 +184,9 @@ public class CharacterRecognitionComponent extends RecognitionComponent implemen
 //					System.out.print(pixels[i][j] + " ");
 //				System.out.println();
 //			}
+			
+			vafusion.recog.Character c = charRecog.match(getImage());
+			System.out.println(c);
 			clear();
 			try {
 				Thread.sleep(1000);

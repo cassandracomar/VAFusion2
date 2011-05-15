@@ -11,13 +11,13 @@ public class CharacterRecognizer implements Recognizer {
 	public CharacterRecognizer(String filename) {
 		
 		System.out.println("Loading neural net...");
-		//nnet = NeuralNetwork.load(filename);
+		nnet = NeuralNetwork.load(filename);
 		System.out.println("Done loading neural net.");
 		
 	}
 	
 	@Override
-	public Unit match(Object arg) {
+	public vafusion.recog.Character match(Object arg) {
 		
 		BufferedImage charimg = (BufferedImage)arg;
 		OcrPlugin plugin = (OcrPlugin)nnet.getPlugin(OcrPlugin.OCR_PLUGIN_NAME);

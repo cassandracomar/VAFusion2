@@ -45,7 +45,7 @@ public class Character implements Unit {
 	
 	public static List<String> getCharacters() {
 		
-		String[] chars = {"N", "0", "7", "1", "2", "3", "4", "5", "6", "8", "9", "Q", "W", "E", "R", "S", "D", "Z", "X", "C", "R"};
+		String[] chars = {"N", "0", "7", "1", "2", "3", "4", "5", "6", "8", "9", "Q", "W", "E", "R", "S", "D", "Z", "X", "C", "H"};
 		return Arrays.asList(chars);
 		
 	}
@@ -55,14 +55,30 @@ public class Character implements Unit {
 		if(charmap == null) {
 			
 			charmap = new HashMap<java.lang.Character, Character>();
-			String[] chars = {"N", "0", "1", "2", "3", "4", "5", "6", "7", "8", "9", "Q", "W", "E", "R", "S", "D", "Z", "X", "C", "R"};
-			Character[] notes = {new Character(Rhythm.NONE), new Character(Rhythm.DOTTED_SIXTEENTH), new Character(Rhythm.DOTTED_HALF), 
-					new Character(Rhythm.HALF_REST), new Character(Rhythm.DOTTED_HALF_REST), new Character(Rhythm.QUARTER_REST), 
-					new Character(Rhythm.DOTTED_QUARTER_REST), new Character(Rhythm.SIXTEENTH_REST), new Character(Rhythm.DOTTED_EIGTH), 
-					new Character(Rhythm.EIGTH_REST), new Character(Rhythm.DOTTED_EIGTH_REST), new Character(Rhythm.QUARTER), 
-					new Character(Rhythm.WHOLE), new Character(Rhythm.EIGTH), new Character(Rhythm.DOTTED_QUARTER), new Character(Rhythm.SIXTEENTH), 
-					new Character(Rhythm.DOTTED_WHOLE), new Character(Rhythm.WHOLE_REST), new Character(Rhythm.DOTTED_WHOLE_REST), 
-					new Character(Rhythm.DOTTED_SIXTEENTH_REST)};
+			String[] chars = {"N", "0", "1", "2", "3", "4", "5", "6", "7", "8", "9", "Q", "W", "E", "R", "S", "D", "Z", "X", "C", "H"};
+			Character[] notes = {
+				new Character(Rhythm.NONE), 
+				new Character(Rhythm.DOTTED_SIXTEENTH), 
+				new Character(Rhythm.DOTTED_HALF), 
+				new Character(Rhythm.HALF_REST), 
+				new Character(Rhythm.DOTTED_HALF_REST), 
+				new Character(Rhythm.QUARTER_REST), 
+				new Character(Rhythm.DOTTED_QUARTER_REST), 
+				new Character(Rhythm.SIXTEENTH_REST), 
+				new Character(Rhythm.DOTTED_EIGTH), 
+				new Character(Rhythm.EIGTH_REST), 
+				new Character(Rhythm.DOTTED_EIGTH_REST), 
+				new Character(Rhythm.QUARTER), 
+				new Character(Rhythm.WHOLE), 
+				new Character(Rhythm.EIGTH), 
+				new Character(Rhythm.DOTTED_SIXTEENTH_REST), 
+				new Character(Rhythm.SIXTEENTH), 
+				new Character(Rhythm.DOTTED_QUARTER), 					
+				new Character(Rhythm.DOTTED_WHOLE), 
+				new Character(Rhythm.WHOLE_REST), 
+				new Character(Rhythm.DOTTED_WHOLE_REST), 					
+				new Character(Rhythm.HALF)
+			};
 			
 			for(int i = 0; i < chars.length; i++)
 				charmap.put(chars[i].charAt(0), notes[i]);
@@ -114,6 +130,57 @@ public class Character implements Unit {
 			return 0.25;
 		default:
 			return 0;
+		
+		}
+		
+	}
+	
+public String toString() {
+		
+		switch(rhythm) {
+		
+		case DOTTED_WHOLE:
+			return "Dotted Whole Note";
+		case DOTTED_WHOLE_REST:
+			return "Dotted Whole Rest";
+		case WHOLE:
+			return "Whole Note";
+		case WHOLE_REST:
+			return "Whole Rest";
+		case DOTTED_HALF:
+			return "Dotted Half Note";
+		case DOTTED_HALF_REST:
+			return "Dotted Half Rest";
+		case HALF:
+			return "Half Note";
+		case HALF_REST:
+			return "Half Rest";
+		case DOTTED_QUARTER:
+			return "Dotted Quarter Note";
+		case DOTTED_QUARTER_REST:
+			return "Dotted Quarter Rest";
+		case QUARTER:
+			return "Quarter Note";
+		case QUARTER_REST:
+			return "Quarter Rest";
+		case DOTTED_EIGTH:
+			return "Dotted Eigth Note";
+		case DOTTED_EIGTH_REST:
+			return "Dotted Eigth Rest";
+		case EIGTH:
+			return "Eigth Note";
+		case EIGTH_REST:
+			return "Eigth Rest";
+		case DOTTED_SIXTEENTH:
+			return "Dotted Sixteenth Note";
+		case DOTTED_SIXTEENTH_REST:
+			return "Dotted Sixteenth Rest";
+		case SIXTEENTH:
+			return "Sixteenth Note";
+		case SIXTEENTH_REST:
+			return "Sixteenth Rest";
+		default:
+			return "Not a recognized character.";
 		
 		}
 		
