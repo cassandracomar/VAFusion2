@@ -36,7 +36,6 @@ public class PianoComponent extends JComponent{
 			public void mouseClicked(MouseEvent arg0) {
 
 			}
-			public void mouseClicked(MouseEvent arg0) {}
 
 
 			@Override
