@@ -86,8 +86,10 @@ public class NetworkTrainer extends JFrame {
 		Vector<Integer> layerCounts = new Vector<Integer>();
 		layerCounts.add(100);
 		
-		NeuralNetwork nnet = OcrHelper.createNewNeuralNetwork("CharacterRecognizer", size, ColorMode.BLACK_AND_WHITE, 
-				Character.getCharacters(), layerCounts , TransferFunctionType.TANH);
+//		NeuralNetwork nnet = OcrHelper.createNewNeuralNetwork("CharacterRecognizer", size, ColorMode.BLACK_AND_WHITE, 
+//				Character.getCharacters(), layerCounts , TransferFunctionType.TANH);
+		
+		NeuralNetwork nnet = NeuralNetwork.load(filename);
 		
 		System.out.println(nnet.getInputNeurons().size());
 		
@@ -97,7 +99,7 @@ public class NetworkTrainer extends JFrame {
 		
 		System.out.println(trainingSets.size());
 		
-		nnet.initializeWeights(-100, 100);
+//		nnet.initializeWeights(-100, 100);
 		
 		for(int i = 0; i < 20; i++) {
 			System.out.println("Pass: " + (i + 1));
@@ -134,7 +136,7 @@ public class NetworkTrainer extends JFrame {
 			}
 		}
 
-		nnet.save(filename);
+//		nnet.save(filename);
 		
 	}
 

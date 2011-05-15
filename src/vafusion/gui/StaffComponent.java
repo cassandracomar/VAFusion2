@@ -23,6 +23,7 @@ public class StaffComponent extends JComponent{
 	}
 	
 	public void paint(Graphics g){
+
 		Graphics2D g2d = (Graphics2D)g;
 		g2d.setColor(Color.WHITE);
 		g2d.fillRect(score.getX(), score.getY()+5, score.getWidth(), score.getHeight());

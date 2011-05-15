@@ -7,6 +7,7 @@ import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 
 import javax.swing.JComponent;
+import javax.swing.JFrame;
 
 import jm.audio.Instrument;
 import jm.music.data.CPhrase;
@@ -21,9 +22,11 @@ public class PianoComponent extends JComponent{
 	
 	private vafusion.data.Piano piano;
 	private vafusion.data.Score score;
+	private Pianel parent;
 	
-	PianoComponent(int x, int y, int height, int width){
+	PianoComponent(int x, int y, int height, int width, Pianel parent){
 		this.piano = new vafusion.data.Piano(x, y, height, width, 60);
+		this.parent = parent;
 		
 		for(KeyComponent k : piano.getBlackKeys())
 			this.add(k);
@@ -31,12 +34,12 @@ public class PianoComponent extends JComponent{
 		for(KeyComponent k : piano.getWhiteKeys())
 			this.add(k);
 		
+		//this.addMouseMotionListener(parent.charRecog.createMouseMotionListener());
+		
 		this.addMouseListener(new MouseListener(){
 
-			public void mouseClicked(MouseEvent arg0) {
-
-			}
-
+			@Override
+			public void mouseClicked(MouseEvent arg0) {}
 
 			@Override
 			public void mouseEntered(MouseEvent arg0) {}
@@ -48,31 +51,49 @@ public class PianoComponent extends JComponent{
 			public void mousePressed(MouseEvent arg0) {
 				KeyComponent k = piano.getKeyComponentAt(arg0.getX(), arg0.getY());
 				
-				if(k != null){
+				if(k != null && arg0.getX() < PianoComponent.this.getX() + PianoComponent.this.getWidth()
+						&& arg0.getY() < PianoComponent.this.getY() + PianoComponent.this.getHeight()){
+					System.out.println("mouse press (Piano): x: " + arg0.getX() + " y: " + arg0.getY());
 					k.press();
 					PianoComponent.this.repaint();
+				} else {
+					
+					//not a key press
+					//arg0.consume();
+					PianoComponent.this.parent.charRecog.dispatchEvent(arg0);
+					PianoComponent.this.parent.staff.dispatchEvent(arg0);
+					
 				}
+				
 			}
 
 			@Override
 			public void mouseReleased(MouseEvent arg0) {
+				
 				KeyComponent k = piano.getKeyComponentAt(arg0.getX(), arg0.getY());
 				
 				if(k != null){
+					System.out.println("mouse release (Piano): x: " + arg0.getX() + " y: " + arg0.getY());
 					k.unpress();
 					PianoComponent.this.repaint();
+					/*
+					 * just unpress ALL the keys. this will fix that stuck key bug. Also, clear the current chord.
+					 * 
+					 */
+					for(KeyComponent kc : piano.getBlackKeys())
+						kc.unpress();
+					for(KeyComponent kc : piano.getWhiteKeys())
+						kc.unpress();
+					
+					PianoComponent.this.repaint();
+				} else {
+					
+					PianoComponent.this.parent.charRecog.dispatchEvent(arg0);
+					PianoComponent.this.parent.staff.dispatchEvent(arg0);
+					
 				}
 				
-				/*
-				 * just unpress ALL the keys. this will fix that stuck key bug. Also, clear the current chord.
-				 * 
-				 */
-				for(KeyComponent kc : piano.getBlackKeys())
-					kc.unpress();
-				for(KeyComponent kc : piano.getWhiteKeys())
-					kc.unpress();
 				
-				PianoComponent.this.repaint();
 			}
 			
 		});
