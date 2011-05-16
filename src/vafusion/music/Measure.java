@@ -187,7 +187,7 @@ public class Measure {
 	
 	public int getWidth() {
 		
-		return (int)(notes.size() * NOTE_SEPARATION_CONSTANT * staffLineHeight + (notes.size() + 1) * noteSeparation);
+		return (int)(notes.size() * NOTE_SEPARATION_CONSTANT * staffLineHeight + (notes.size() + 1) * noteSeparation) / 2 + 5;
 		
 	}
 	
