@@ -39,7 +39,12 @@ public class PianoComponent extends JComponent{
 		this.addMouseListener(new MouseListener(){
 
 			@Override
-			public void mouseClicked(MouseEvent arg0) {}
+			public void mouseClicked(MouseEvent arg0) {
+				
+				PianoComponent.this.parent.charRecog.dispatchEvent(arg0);
+				PianoComponent.this.parent.staff.dispatchEvent(arg0);
+				
+			}
 
 			@Override
 			public void mouseEntered(MouseEvent arg0) {}
