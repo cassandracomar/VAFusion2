@@ -11,7 +11,7 @@ public class CharacterRecognizer implements Recognizer {
 	public CharacterRecognizer(String filename) {
 		
 		System.out.println("Loading neural net...");
-		nnet = NeuralNetwork.load(filename);
+		//nnet = NeuralNetwork.load(filename);
 		System.out.println("Done loading neural net.");
 		
 	}
