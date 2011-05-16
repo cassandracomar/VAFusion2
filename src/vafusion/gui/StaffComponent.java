@@ -3,6 +3,7 @@ package vafusion.gui;
 import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
+import java.io.IOException;
 
 import javax.swing.JComponent;
 
@@ -31,7 +32,11 @@ public class StaffComponent extends JComponent{
 		g2d.setColor(Color.BLACK);
 		g2d.drawRect(score.getX(), score.getY()+5, score.getWidth(), score.getHeight());
 
-		score.drawNotes();
+		try {
+			score.drawNotes();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
 		
 		for(Staff staff: score.getStaves())			
 			staff.paint(g2d);

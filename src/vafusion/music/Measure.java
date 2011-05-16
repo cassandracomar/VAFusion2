@@ -2,6 +2,7 @@ package vafusion.music;
 
 import java.awt.Graphics;
 import java.awt.Graphics2D;
+import java.io.IOException;
 import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
@@ -73,7 +74,7 @@ public class Measure {
 		this.tieOut = tieOut;
 	}
 	
-	public jm.music.data.Note addNote(jm.music.data.Note n) {
+	public jm.music.data.Note addNote(jm.music.data.Note n){
 		
 		if(duration == timeSignature) //this measure is already full!
 			return n;
@@ -81,13 +82,13 @@ public class Measure {
 		if(n.getRhythmValue() / denom + duration <= timeSignature) {
 			
 			//we're golden, add the note directly and return null
-			int width = (int) (staffLineHeight * NOTE_SEPARATION_CONSTANT); // FIXME
-			int height = staffLineHeight; //FIXME
-			int pos = getPos(n.getPitch()); //FIXME
+			int width = (int) (staffLineHeight * NOTE_SEPARATION_CONSTANT);//FIXME
+			int height = staffLineHeight;
+			int pos = getPos(n.getPitch());
 			int note = n.getPitchValue();
 			double rhythm = n.getRhythmValue();
 			
-			notes.add(new Note(pos, rhythm, !n.isRest()));
+			notes.add(new Note(pos, rhythm, !n.isRest(), getAccidental(n.getPitch())));
 			duration += rhythm / denom;
 			
 			return null;
@@ -102,7 +103,7 @@ public class Measure {
 			int pos = getPos(n.getPitch()); //FIXME
 			int note = keep.getPitchValue();
 			double rhythm = keep.getRhythmValue();
-			notes.add(new Note(pos, rhythm, !keep.isRest()));
+			notes.add(new Note(pos, rhythm, !keep.isRest(), getAccidental(n.getPitch())));
 			duration += rhythm / denom;
 			setTieOut(true);
 				
@@ -111,6 +112,62 @@ public class Measure {
 		
 	}
 	
+	private int getAccidental(int pitch) {
+		if(defaultFlat){
+			if(clef == Clef.TREBLE){
+				switch(pitch){
+					case 62:
+					case 64:
+					case 67:
+					case 69:
+					case 71:
+					case 74:
+					case 76:
+					case 79:	return -1;
+					default:	return 0;
+				}
+			}else{
+				switch(pitch){
+					case 64:
+					case 67:
+					case 69:
+					case 71:
+					case 74:
+					case 76:
+					case 79:
+					case 81:	return 1;
+					default:	return 0;
+				}
+			}
+		}else{
+			if(clef == Clef.TREBLE){
+				switch(pitch){
+					case 42:
+					case 44:
+					case 46:
+					case 49:
+					case 51:
+					case 54:
+					case 56:
+					case 58:	return -1;
+					default:	return 0;
+				}
+			}else{
+				switch(pitch){
+					case 42:
+					case 44:
+					case 46:
+					case 49:
+					case 51:
+					case 54:
+					case 56:
+					case 58:	return 1;
+					default:	return 0;
+				}
+			}
+		}
+	}
+
 	public int getPos(int note){
 		if(defaultFlat){
 			if(this.clef == Clef.TREBLE){
@@ -162,34 +219,38 @@ public class Measure {
 		this.noteSeparation = (int)(height/5 * NOTE_SEPARATION_CONSTANT);
 		
 		for(int i = 0; i < notes.size(); i++)
-			notes.get(i).update(x + i * noteSeparation, y, height / 6);
+			notes.get(i).update(x + i * noteSeparation, y);
 		
 	}
 	
 	private HashMap<Integer, Integer> initTreblePositionsFlat(){
 		HashMap<Integer, Integer> map = new HashMap<Integer, Integer>();
-		map.put(61, 10); //Db
-		map.put(62, 10); //D
-		map.put(63, 9); //Eb
-		map.put(64, 9); //E
-		map.put(65, 8); //F
-		map.put(66, 7); //Gb
-		map.put(67, 7); //G
-		map.put(68, 6); //Ab
-		map.put(69, 6); //A
-		map.put(70, 5); //Bb
-		map.put(71, 5); //B
-		map.put(72, 4); //C
-		map.put(73, 3); //Db
-		map.put(74, 3); //D
-		map.put(75, 2); //Eb
-		map.put(76, 2); //E
-		map.put(77, 1); //F
-		map.put(78, 0); //Gb
-		map.put(79, 0); //G
+		map.put(61, 10); //C
+		map.put(62, 9); //Db
+		map.put(63, 9); //D
+		map.put(64, 8); //Eb
+		map.put(65, 8); //E
+		map.put(66, 7); //F
+		map.put(67, 6); //Gb
+		map.put(68, 6); //G
+		map.put(69, 5); //Ab
+		map.put(70, 5); //A
+		map.put(71, 4); //Bb
+		map.put(72, 4); //B
+		map.put(73, 3); //C
+		map.put(74, 2); //Db
+		map.put(75, 2); //D
+		map.put(76, 1); //Eb
+		map.put(77, 1); //E
+		map.put(78, 0); //F
+		map.put(79, 0); //Gb
 		
 		return map;
 	}
+	
+	//TODO: Fix the rest of the hashes. ^^ has been fixed, but the only one.
+	//TODO: Just kidding, ^^ is severely borked, but the rest of the program works as if it was correct
+	//TODO: if anyone ever cares about this code again, please fix it...
 	
 	private HashMap<Integer, Integer> initTreblePositionsSharp(){
 		HashMap<Integer, Integer> map = new HashMap<Integer, Integer>();
@@ -258,9 +319,9 @@ public class Measure {
 		map.put(53, 3); //F
 		map.put(54, 3); //F#
 		map.put(55, 2); //G
-		map.put(56, 1); //Ab
+		map.put(56, 1); //G#
 		map.put(57, 1); //A
-		map.put(58, 0); //Bb
+		map.put(58, 0); //A#
 		map.put(59, 0); //B
 		
 		return map;

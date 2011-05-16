@@ -2,6 +2,7 @@ package vafusion.data;
 
 import java.awt.Color;
 import java.awt.Graphics2D;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
@@ -120,7 +121,7 @@ public class Score {
 	 * measure width = number of notes * 2.5 * staffLineSeparation + (numberofnotes +1)*width between notes
 	 * 
 	 */
-	public void drawNotes() {
+	public void drawNotes() throws IOException{
 		
 		List<Note> remainingNotes = new LinkedList<Note>();
 		remainingNotes.addAll(notes.getAll());

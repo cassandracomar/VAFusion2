@@ -1,9 +1,13 @@
 package vafusion.music;
 import java.awt.Color;
+import javax.imageio.ImageIO;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.geom.Ellipse2D;
 import java.awt.geom.Line2D;
+import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 
@@ -12,18 +16,31 @@ public class Note {
 	private boolean filled;
 	private boolean isNote;
 	int x, y, height, width, pos;
-	int note;
+	int note, accidental;
 	double rhythm;
+	public static BufferedImage sharp, flat, eighth, sixteenth, quarter;
 	
 	
-	public Note(int pos, double rhythm, boolean isNote){
-		if(isNote){
-			this.filled = isFilled(rhythm);
-		}			
+	public Note(int pos, double rhythm, boolean isNote, int accidental){
+		
+		this.filled = isFilled(rhythm);
 		
 		this.isNote = isNote;
 		this.pos = pos;
 		this.rhythm = rhythm;
+		this.accidental = accidental;
+		
+		if(sharp == null){
+			try {
+				sharp = loadImage(new File("img/Notes/sharp-small.gif"));
+				flat = loadImage(new File("img/Notes/flat-small.gif"));
+				eighth = loadImage(new File("img/Notes/EighthRest.gif"));
+				quarter = loadImage(new File("img/Notes/quarter.gif"));
+				sixteenth = loadImage(new File("img/Notes/sixteenth rest.gif"));
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+		}
 		
 		if(isNote)
 			this.pos = pos;
@@ -44,21 +61,62 @@ public class Note {
 				//fillOval
 				g2d.fillOval(x, y, width, height);
 				g2d.draw(getStem());
+				
+				if(rhythm < 1){
+					g2d.draw(getFlag());
+					if(rhythm < .5)
+						g2d.draw(getSixteenthFlag());
+				}
 			}else{
 				//draw a ellipse2d
 				g2d.draw(new Ellipse2D.Double(x, y, width, height));
 				if(rhythm < 4)
 					g2d.draw(getStem());
 			}
+			
+			if(accidental != 0){
+				if(accidental == -1){
+					g2d.drawImage(flat, null, x - 5, y - 5);
+					
+					System.out.println("flat: " + x + ", "+ y);
+				}else{
+					g2d.drawImage(sharp, null, x, y);
+				}
+			}
 		}else{
-			g2d.fillRect(x, y, width, height);
+			if(this.filled){
+				if(rhythm == .25)
+					g2d.drawImage(sixteenth, null, x, y);
+				if(rhythm == .5)
+					g2d.drawImage(eighth, null, x, y);
+				if(rhythm == 1)
+					g2d.drawImage(quarter, null, x, y);
+				
+			}else{
+				g2d.fillRect(x, y, width, height);
+			}
+			
 		}
 		
 		
 	}
 	
+	public Line2D.Double getFlag(){
+		if(pos > 4) //stem goes up
+			return new Line2D.Double(x+ width, y+height/2 - height * 5, x+ width * 2, y+ height/2-height * 2.5);
+		
+		return new Line2D.Double(x, y+height/2 + height*5, x + width, y + height/2 + height * 2.5);
+	}
+	
+	public Line2D.Double getSixteenthFlag(){
+		if(pos > 4) //stem goes up
+			return new Line2D.Double(x+ width, y+height/2 - height * 2.5, x+ width * 2, y+ height/2);
+		
+		return new Line2D.Double(x, y+height/2 + height*2.5, x + width, y + height/2 + height);
+	}
+	
 	public Line2D.Double getStem(){
-		if(pos > 6) //stem goes up
+		if(pos > 4) //stem goes up
 			return new Line2D.Double(x+width, y + height/2, x+width, y+ height/2 - height * 5);
 		
 		return new Line2D.Double(x, y + height/2, x, y+ height/2 + height * 5);
@@ -71,13 +129,18 @@ public class Note {
 			return true;
 	}
 	
-	public void update(int x, int y, int lineSpace) {
+	public void update(int x, int y) {
 		
 		this.x = x;
-		this.y = y + (lineSpace/2) * pos;
-		this.width = (int)(lineSpace * 2.5);
-		this.height = lineSpace;
+		this.y = y + ((6/2) * pos-2) -1;
+		this.width = (int)(6 * 2.5);
+		this.height = 6;
 		
+	}
+	
+	public static BufferedImage loadImage(File file) throws IOException {
+		BufferedImage image = ImageIO.read(file);
+		return image;
 	}
 		
 }

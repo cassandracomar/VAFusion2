@@ -239,8 +239,8 @@ public class Pianel extends JFrame implements JMC {
         
         
         // Display the frame
-        int frameWidth = 1920;
-        int frameHeight = 1200;
+        int frameWidth = 1500;
+        int frameHeight = 1000;
         this.setSize(frameWidth, frameHeight);
         this.setVisible(true);
         
