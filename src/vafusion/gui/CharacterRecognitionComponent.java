@@ -18,7 +18,7 @@ import vafusion.recog.CharacterRecognizer;
 @SuppressWarnings("serial")
 public class CharacterRecognitionComponent extends RecognitionComponent implements Runnable {
 	volatile int[][] pixels;
-	final int height = 147, width = 256; //enforced by neural network size
+	final int height = 74, width = 128; //enforced by neural network size
 	int x, y;
 	boolean running = true;
 	long time = System.currentTimeMillis();
