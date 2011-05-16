@@ -1,5 +1,6 @@
 package vafusion.music;
 
+import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.io.IOException;
@@ -201,6 +202,9 @@ public class Measure {
 			n.paint(g2d);
 			//System.out.println(n);
 		}
+		
+		g2d.setColor(Color.BLACK);
+		g2d.fillRect(this.x + this.getWidth(), this.y, 10, this.height);
 		
 		
 	}
