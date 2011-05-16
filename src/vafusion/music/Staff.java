@@ -92,7 +92,7 @@ public class Staff {
 	
 	public void update() {
 		
-		int currX = this.staffData.getX();
+		int currX = this.staffData.getX() + this.clef.getWidth() + 10;
 		//System.out.println(measures.size());
 		for(Measure m : measures) {
 			
