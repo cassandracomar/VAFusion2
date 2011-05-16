@@ -188,7 +188,7 @@ public class Measure {
 	
 	public int getWidth() {
 		
-		return (int)(notes.size() * NOTE_SEPARATION_CONSTANT * staffLineHeight + (notes.size() + 1) * noteSeparation) / 2 + 5;
+		return width = (int)(notes.size() * NOTE_SEPARATION_CONSTANT * staffLineHeight + (notes.size() + 1) * noteSeparation) / 2 + 5;
 		
 	}
 	
@@ -204,7 +204,8 @@ public class Measure {
 		}
 		
 		g2d.setColor(Color.BLACK);
-		g2d.fillRect(this.x + this.getWidth(), this.y, 10, this.height);
+		System.out.println("Measure line: x1: " + (this.x + this.getWidth()) + " y1: " + this.y + " y2: " + (this.y + this.height));
+		g2d.fillRect(this.x + this.getWidth() - 5, this.y, 3, this.height);
 		
 		
 	}
