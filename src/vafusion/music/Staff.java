@@ -65,8 +65,22 @@ public class Staff {
 		
 		g2d.drawImage(clef, null, x, y);
 		
+		Measure prev = null;
+		
 		for(Measure m : measures){
 			m.paint(g2d);
+			
+			if(prev != null){
+				List<Note> notes1 = prev.getNotes();
+				List<Note> notes2 = m.getNotes();
+				int first = notes2.get(0).getX();
+				int last = notes1.get(notes1.size()-1).getX();
+				double avg = (first + last) * .5 + 10;
+				
+				g2d.draw(new Line2D.Double(avg, y, avg, y + (height/5) * 4));
+			}
+			
+			prev = m;
 		}
 		
 	}
