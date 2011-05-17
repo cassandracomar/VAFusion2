@@ -1,8 +1,6 @@
 package vafusion.data;
 
-import java.awt.Color;
-import java.awt.Graphics2D;
-import java.io.IOException;
+import java.awt.Point;
 import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
@@ -19,8 +17,8 @@ public class Score {
 	private boolean defaultFlat;
 //	private jm.music.data.Part[] parts;
 //	private int currentPart;
-	private int num;
-	private int denom;
+//	private int num;
+//	private int denom;
 	private List<Staff> staves;
 	protected enum Clef {TREBLE, BASS};
 	Phrase notes;
@@ -34,8 +32,8 @@ public class Score {
 		this.defaultFlat = true;
 		this.numLines = numLines;
 		staves = new ArrayList<Staff>();
-		this.num = 4;
-		this.denom = 4;
+//		this.num = 4;
+//		this.denom = 4;
 		notes = new Phrase();
 		
 		int betweenSpace = ((height / numLines + 1) / 5) * 2;
@@ -121,7 +119,7 @@ public class Score {
 	 * measure width = number of notes * 2.5 * staffLineSeparation + (numberofnotes +1)*width between notes
 	 * 
 	 */
-	public void drawNotes() throws IOException{
+	public void drawNotes() {
 		
 		List<Note> remainingNotes = new LinkedList<Note>();
 		remainingNotes.addAll(notes.getAll());
@@ -166,5 +164,23 @@ public class Score {
 			s.update();
 			
 		
+	}
+
+	public vafusion.music.Note getNoteAtPos(Point p) {
+		//stuff the staves with notes
+		this.drawNotes();
+		
+		//first figure out which staff we need
+		vafusion.music.Note n = null;
+		for(Staff staff : staves) {
+			if(p.y >= staff.getY() && p.y <= staff.getY() + staff.getHeight())
+				n = staff.getNote(p.x);
+		}
+		
+		for(Staff staff : staves)
+			staff.clearMeasures();
+		
+		//should never get here, but...
+		return n;
 	}
 }

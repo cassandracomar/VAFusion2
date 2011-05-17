@@ -7,7 +7,6 @@ import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 
 import javax.swing.JComponent;
-import javax.swing.JFrame;
 
 import jm.audio.Instrument;
 import jm.music.data.CPhrase;

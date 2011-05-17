@@ -8,8 +8,6 @@ import java.awt.geom.Line2D;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.HashMap;
 
 public class Note {
 	private Graphics2D g2d;
@@ -20,6 +18,8 @@ public class Note {
 	double rhythm;
 	public static BufferedImage sharp, flat, eighth, sixteenth, quarter;
 	
+	boolean isSelected;
+	
 	
 	public Note(int pos, double rhythm, boolean isNote, int accidental){
 		
@@ -29,6 +29,7 @@ public class Note {
 		this.pos = pos;
 		this.rhythm = rhythm;
 		this.accidental = accidental;
+		isSelected = false;
 		
 		if(sharp == null){
 			try {
@@ -54,7 +55,10 @@ public class Note {
 	
 	public void paint(Graphics g){
 		this.g2d = (Graphics2D) g;
-		g2d.setColor(Color.BLACK);
+		if(this.isSelected)
+			g2d.setColor(Color.CYAN);
+		else
+			g2d.setColor(Color.BLACK);
 		
 		if(this.isNote){
 			if(this.filled){
@@ -141,6 +145,36 @@ public class Note {
 	public static BufferedImage loadImage(File file) throws IOException {
 		BufferedImage image = ImageIO.read(file);
 		return image;
+	}
+	
+	public void select() {
+		
+		isSelected = true;
+		
+	}
+	
+	public void unselect() {
+		
+		isSelected = false;
+		
+	}
+	
+	public boolean isSelected() {
+		
+		return isSelected;
+		
+	}
+	
+	public int getX() {
+		
+		return x;
+		
+	}
+	
+	public int getWidth() {
+		
+		return width;
+		
 	}
 		
 }

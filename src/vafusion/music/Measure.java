@@ -3,7 +3,6 @@ package vafusion.music;
 import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
-import java.io.IOException;
 import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
@@ -20,8 +19,8 @@ public class Measure {
 	private double timeSignature;
 	private double duration = 0;
 	private int x, y, width, height;
-	private int noteSeparation, staffLineHeight;
-	public static double NOTE_SEPARATION_CONSTANT = 3.5;
+	private int noteSeparation;
+	public static double NOTE_SEPARATION_CONSTANT = 4.25;
 	
 	protected enum Clef {TREBLE, BASS};
 	private Clef clef;
@@ -29,6 +28,7 @@ public class Measure {
 	protected HashMap<Integer, Integer> bassPositionsFlat;
 	protected HashMap<Integer, Integer> treblePositionsSharp;
 	protected HashMap<Integer, Integer> bassPositionsSharp;
+	@SuppressWarnings("unused")
 	private int[] noteRange;
 	
 	public Measure(int clef, boolean defaultFlat, int lineSeparation) {
@@ -48,7 +48,6 @@ public class Measure {
 		this.bassPositionsFlat = initBassPositionsFlat();
 		this.treblePositionsSharp = initTreblePositionsSharp();
 		this.bassPositionsSharp = initBassPositionsSharp();
-		this.staffLineHeight = lineSeparation;
 		this.noteSeparation = (int)(NOTE_SEPARATION_CONSTANT * lineSeparation);
 		
 		notes = new LinkedList<Note>();
@@ -83,10 +82,11 @@ public class Measure {
 		if(n.getRhythmValue() / denom + duration <= timeSignature) {
 			
 			//we're golden, add the note directly and return null
-			int width = (int) (staffLineHeight * NOTE_SEPARATION_CONSTANT);//FIXME
-			int height = staffLineHeight;
-			int pos = getPos(n.getPitch());
-			int note = n.getPitchValue();
+			int pos;
+			if(n.isRest())
+				pos = 4;
+			else
+				pos = getPos(n.getPitch());
 			double rhythm = n.getRhythmValue();
 			
 			notes.add(new Note(pos, rhythm, !n.isRest(), getAccidental(n.getPitch())));
@@ -99,10 +99,11 @@ public class Measure {
 			//the note needs to be split
 			jm.music.data.Note remainder = new jm.music.data.Note(n.getPitch(), (duration + n.getRhythmValue() / denom) - timeSignature);
 			jm.music.data.Note keep = new jm.music.data.Note(n.getPitch(), timeSignature - duration);
-			int width = (int)(staffLineHeight * NOTE_SEPARATION_CONSTANT); // FIXME
-			int height = 6; //FIXME
-			int pos = getPos(n.getPitch()); //FIXME
-			int note = keep.getPitchValue();
+			int pos;
+			if(n.isRest())
+				pos = 4;
+			else
+				pos = getPos(n.getPitch());
 			double rhythm = keep.getRhythmValue();
 			notes.add(new Note(pos, rhythm, !keep.isRest(), getAccidental(n.getPitch())));
 			duration += rhythm / denom;
@@ -188,7 +189,7 @@ public class Measure {
 	
 	public int getWidth() {
 		
-		return (int)(notes.size() * NOTE_SEPARATION_CONSTANT * staffLineHeight + (notes.size() + 1) * noteSeparation) / 2 + 5;
+		return width;
 		
 	}
 	
@@ -196,15 +197,14 @@ public class Measure {
 		
 		Graphics2D g2d = (Graphics2D)g;
 		
-		//FIXME: Add vertical lines for measure + plus ties, etc.
-		
 		for(Note n : notes){
 			n.paint(g2d);
 			//System.out.println(n);
 		}
 		
 		g2d.setColor(Color.BLACK);
-		g2d.fillRect(this.x + this.getWidth(), this.y, 10, this.height);
+		System.out.println("Measure line: x1: " + (this.x + this.getWidth()) + " y1: " + this.y + " y2: " + (this.y + this.height));
+		g2d.fillRect(this.x + this.getWidth() - 5, this.y, 3, this.height); //FIXME doesn't work...why not?
 		
 		
 	}
@@ -347,5 +347,22 @@ public class Measure {
 		}
 		
 		return range;
+	}
+	
+	public int getX() {
+		
+		return x;
+		
+	}
+	
+	public Note getNote(int x) {
+		
+		System.out.println("Measure.getNote x: " + x);
+		for(Note n : notes)
+			if(x >= n.getX() && x <= n.getX() + n.getWidth())
+				return n;
+		
+		return null;
+		
 	}
 }

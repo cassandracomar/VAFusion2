@@ -11,8 +11,6 @@ import java.util.List;
 
 import javax.imageio.ImageIO;
 
-import vafusion.music.Measure.Clef;
-
 public class Staff {
 	private Line2D.Double[] lines;
 	private Graphics2D g2d;
@@ -35,7 +33,6 @@ public class Staff {
 			this.lines[i] = new Line2D.Double(x, y + (height/5)*i, x + width, y + (height/5)*i);
 		}
 		
-		// TODO: create clefs to be drawn here
 		if(bass == null){
 			try {
 				bass = loadImage(new File("img/Notes/bassclef.gif"));
@@ -114,5 +111,46 @@ public class Staff {
 		return image;
 	}
 	
+	public int getX() {
+		
+		return this.x;
+		
+	}
+	
+	public int getY() {
+		
+		return this.y;
+		
+	}
+	
+	public int getWidth() {
+		
+		return width;
+		
+	}
+	
+	public int getHeight() {
+		
+		return height;
+		
+	}
+	
+	public vafusion.music.Note getNote(int x) {
+		
+		System.out.println("Staff.getNote x: " + x);
+		//figure out which measure the note is in
+		for(Measure m : measures)
+			if(x >= m.getX() && x <= m.getX() + m.getWidth())
+				return m.getNote(x);
+		
+		return null;
+		
+	}
+
+	public void clearMeasures() {
+		
+		measures.clear();
+		
+	}
 }
 
