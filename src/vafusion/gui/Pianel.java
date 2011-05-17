@@ -228,7 +228,7 @@ public class Pianel extends JFrame implements JMC {
         
         this.pianoComponent.setBounds(20, 0, width, height/2);
         this.staff.setBounds(20, 50, width, height /2);
-        this.charRecog.setBounds(60 + staff.getWidth(), 110 + height / 2, 512, 147);
+        this.charRecog.setBounds(charRecog.getRealX(), charRecog.getRealY(), 512, 147);
         makeRecordingButton();
         makeScoreButton();
         prepRhythms();
@@ -250,6 +250,7 @@ public class Pianel extends JFrame implements JMC {
         int frameHeight = 575;
         this.setSize(frameWidth, frameHeight);
         this.setVisible(true);
+        this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);	
         
        
     }
