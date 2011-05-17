@@ -240,6 +240,7 @@ public class Pianel extends JFrame implements JMC {
         int frameHeight = 1000;
         this.setSize(frameWidth, frameHeight);
         this.setVisible(true);
+        this.setDefaultCloseOperation(this.EXIT_ON_CLOSE);
         
        
     }
