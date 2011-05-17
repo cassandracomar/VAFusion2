@@ -49,6 +49,10 @@ public class Score {
 		}
 	}
 	
+	public Phrase getNotes(){
+		return notes;
+	}
+	
 	public void setDefaultFlat(boolean bool){
 		this.defaultFlat = bool;
 	}

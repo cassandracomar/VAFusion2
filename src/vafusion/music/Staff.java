@@ -63,8 +63,9 @@ public class Staff {
 		
 		g2d.drawImage(clef, null, x, y);
 		
-		for(Measure m : measures)
+		for(Measure m : measures){
 			m.paint(g2d);
+		}
 		
 	}
 	

@@ -285,8 +285,9 @@ public class Pianel extends JFrame implements JMC {
         JMenuItem clear = new JMenuItem("Clear");
         JMenuItem save = new JMenuItem("Save to Midi");
         JMenuItem load = new JMenuItem("Load from Midi");
-        JMenuItem select = new JMenuItem("Select Instrument");
+        JMenu select = new JMenu("Select Instrument");
         JMenuItem range = new JMenuItem("Set Piano Range");
+        JMenuItem acc = new JMenuItem("Set Accidental Default");
         clear.addActionListener(new ActionListener() {
 
 			@Override
@@ -317,6 +318,7 @@ public class Pianel extends JFrame implements JMC {
         file.add(load);
         music.add(select);
         music.add(range);
+        music.add(acc);
         
 
 //        menuBar.setBounds(0, 0, 967, 30);
