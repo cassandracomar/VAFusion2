@@ -24,7 +24,7 @@ public class Staff {
 	public Staff(int x, int y, int width, int height, int clef){
 		this.lines = new Line2D.Double[6];
 		this.width = width;
-		this.height = height;
+		this.height = 30;
 		staffData = new vafusion.data.Line(x, y, width, height, clef);
 		this.x = x;
 		this.y = y;
@@ -77,8 +77,15 @@ public class Staff {
 				int last = notes1.get(notes1.size()-1).getX();
 				double avg = (first + last) * .5 + 10;
 				
+				if(m.isTieIn())
+					g2d.drawArc(last + 10, y-25, last - first, 40, 0, 180);
+					
+					
+				
 				g2d.draw(new Line2D.Double(avg, y, avg, y + (height/5) * 4));
 			}
+			
+			
 			
 			prev = m;
 		}
