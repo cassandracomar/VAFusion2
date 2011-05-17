@@ -35,9 +35,9 @@ public class Note {
 			try {
 				sharp = loadImage(new File("img/Notes/sharp-small.gif"));
 				flat = loadImage(new File("img/Notes/flat-small.gif"));
-				eighth = loadImage(new File("img/Notes/EighthRest.gif"));
-				quarter = loadImage(new File("img/Notes/quarter.gif"));
-				sixteenth = loadImage(new File("img/Notes/sixteenth rest.gif"));
+				eighth = loadImage(new File("img/Notes/EighthRest-small.gif"));
+				quarter = loadImage(new File("img/Notes/quarter-small.gif"));
+				sixteenth = loadImage(new File("img/Notes/sixteenth rest-small.gif"));
 			} catch (IOException e) {
 				e.printStackTrace();
 			}
@@ -87,6 +87,9 @@ public class Note {
 					g2d.drawImage(sharp, null, x, y);
 				}
 			}
+			
+			if(note == 61)
+				g2d.drawLine(x-width/2, y + height/2, x+ width/2, y+ height/2);
 		}else{
 			if(this.filled){
 				if(rhythm == .25)
