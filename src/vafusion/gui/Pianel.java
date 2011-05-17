@@ -8,6 +8,7 @@ import java.beans.PropertyChangeListener;
 import java.util.HashMap;
 
 import javax.swing.Action;
+import javax.swing.ButtonGroup;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JFrame;
@@ -274,8 +275,10 @@ public class Pianel extends JFrame implements JMC {
         this.setSize(frameWidth, frameHeight);
         this.setVisible(true);
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);	
+        defaultInst.doClick();
        
     }
+    static JRadioButtonMenuItem defaultInst;
 
     private void setupMenuBar() {
 
@@ -313,20 +316,7 @@ public class Pianel extends JFrame implements JMC {
 			}
         });
         
-        
-        JRadioButtonMenuItem altoSax = new JRadioButtonMenuItem("Alto Sax");
-        JRadioButtonMenuItem bagPipes = new JRadioButtonMenuItem("Bag Pipes");
-        JRadioButtonMenuItem banjo = new JRadioButtonMenuItem("Banjo");
-        JRadioButtonMenuItem bass = new JRadioButtonMenuItem("Bass");
-        JRadioButtonMenuItem bassoon = new JRadioButtonMenuItem("Bassoon");
-        JRadioButtonMenuItem baritone = new JRadioButtonMenuItem("Baritone");
-        
-        
-        select.add(altoSax);
-        select.add(bagPipes);
-        select.add(banjo);
-        select.add(bass);
-        select.add(bassoon);
+        addInstrumentsToMenu(select);
         
         file.add(clear);
         file.add(save);
@@ -343,6 +333,308 @@ public class Pianel extends JFrame implements JMC {
         
 	}
 
+    public void addInstrumentsToMenu(JMenu select) {
+    	
+    	JRadioButtonMenuItem altoSax = new JRadioButtonMenuItem("Alto Sax");
+        JRadioButtonMenuItem bagPipes = new JRadioButtonMenuItem("Bag Pipes");
+        JRadioButtonMenuItem banjo = new JRadioButtonMenuItem("Banjo");
+        JRadioButtonMenuItem bass = new JRadioButtonMenuItem("Bass");
+        JRadioButtonMenuItem bassoon = new JRadioButtonMenuItem("Bassoon");
+        JRadioButtonMenuItem baritone = new JRadioButtonMenuItem("Baritone");
+        JRadioButtonMenuItem bells = new JRadioButtonMenuItem("Bells");
+        JRadioButtonMenuItem churchOrgan = new JRadioButtonMenuItem("Church Organ");
+        JRadioButtonMenuItem drum = new JRadioButtonMenuItem("Drum");
+        JRadioButtonMenuItem clarinet = new JRadioButtonMenuItem("Clarinet");
+        JRadioButtonMenuItem eGuitar = new JRadioButtonMenuItem("Electric Guitar");
+        JRadioButtonMenuItem flute = new JRadioButtonMenuItem("Flute");
+        JRadioButtonMenuItem frenchHorn = new JRadioButtonMenuItem("French Horn");
+        JRadioButtonMenuItem guitar = new JRadioButtonMenuItem("Guitar");
+        JRadioButtonMenuItem harp = new JRadioButtonMenuItem("Harp");
+        JRadioButtonMenuItem oboe = new JRadioButtonMenuItem("Oboe");
+        JRadioButtonMenuItem ocarina = new JRadioButtonMenuItem("Ocarina");
+        JRadioButtonMenuItem piano = new JRadioButtonMenuItem("Piano");
+        defaultInst = piano;
+        JRadioButtonMenuItem trombone = new JRadioButtonMenuItem("Trombone");
+        JRadioButtonMenuItem tuba = new JRadioButtonMenuItem("Tuba");
+        JRadioButtonMenuItem violin = new JRadioButtonMenuItem("Violin");
+        
+        altoSax.addActionListener(new ActionListener(){
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				
+				Pianel.this.updateInst(ALTO_SAX);
+				
+			}
+        	
+        });
+        
+        bagPipes.addActionListener(new ActionListener(){
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				
+				Pianel.this.updateInst(BAGPIPES);
+				
+			}
+        	
+        });
+        
+        banjo.addActionListener(new ActionListener(){
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				
+				Pianel.this.updateInst(BANJO);
+				
+			}
+        	
+        });
+        
+        bass.addActionListener(new ActionListener(){
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				
+				Pianel.this.updateInst(BASS);
+				
+			}
+        	
+        });
+        
+        bassoon.addActionListener(new ActionListener(){
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				
+				Pianel.this.updateInst(BASSOON);
+				
+			}
+        	
+        });
+        
+        baritone.addActionListener(new ActionListener(){
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				
+				Pianel.this.updateInst(BARITONE);
+				
+			}
+        	
+        });
+        
+        bells.addActionListener(new ActionListener(){
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				
+				Pianel.this.updateInst(BELLS);
+				
+			}
+        	
+        });
+        
+        churchOrgan.addActionListener(new ActionListener(){
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				
+				Pianel.this.updateInst(CHURCH_ORGAN);
+				
+			}
+        	
+        });
+        
+        drum.addActionListener(new ActionListener(){
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				
+				Pianel.this.updateInst(DRUM);
+				
+			}
+        	
+        });
+        
+        clarinet.addActionListener(new ActionListener(){
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				
+				Pianel.this.updateInst(CLARINET);
+				
+			}
+        	
+        });
+        
+        eGuitar.addActionListener(new ActionListener(){
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				
+				Pianel.this.updateInst(ELECTRIC_GUITAR);
+				
+			}
+        	
+        });
+        
+        flute.addActionListener(new ActionListener(){
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				
+				Pianel.this.updateInst(FLUTE);
+				
+			}
+        	
+        });
+        
+        frenchHorn.addActionListener(new ActionListener(){
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				
+				Pianel.this.updateInst(FRENCH_HORN);
+				
+			}
+        	
+        });
+        
+        guitar.addActionListener(new ActionListener(){
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				
+				Pianel.this.updateInst(GUITAR);
+				
+			}
+        	
+        });
+        
+        harp.addActionListener(new ActionListener(){
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				
+				Pianel.this.updateInst(HARP);
+				
+			}
+        	
+        });
+        
+        oboe.addActionListener(new ActionListener(){
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				
+				Pianel.this.updateInst(OBOE);
+				
+			}
+        	
+        });
+        
+        ocarina.addActionListener(new ActionListener(){
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				
+				Pianel.this.updateInst(OCARINA);
+				
+			}
+        	
+        });
+        
+        piano.addActionListener(new ActionListener(){
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				
+				Pianel.this.updateInst(PIANO);
+				
+			}
+        	
+        });
+        //piano.doClick();
+        
+        trombone.addActionListener(new ActionListener(){
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				
+				Pianel.this.updateInst(TROMBONE);
+				
+			}
+        	
+        });
+        
+        tuba.addActionListener(new ActionListener(){
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				
+				Pianel.this.updateInst(TUBA);
+				
+			}
+        	
+        });
+        
+        violin.addActionListener(new ActionListener(){
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				
+				Pianel.this.updateInst(VIOLIN);
+				
+			}
+        	
+        });
+        ButtonGroup group = new ButtonGroup();
+        group.add(altoSax);
+        group.add(bagPipes);
+        group.add(banjo);
+        group.add(bass);
+        group.add(bassoon);
+        group.add(baritone);
+        group.add(bells);
+        group.add(churchOrgan);
+        group.add(drum);
+        group.add(clarinet);
+        group.add(eGuitar);
+        group.add(flute);
+        group.add(frenchHorn);
+        group.add(guitar);
+        group.add(harp);
+        group.add(oboe);
+        group.add(ocarina);
+        group.add(piano);
+        group.add(trombone);
+        group.add(tuba);
+        group.add(violin);
+        
+        select.add(altoSax);
+        select.add(bagPipes);
+        select.add(banjo);
+        select.add(bass);
+        select.add(bassoon);
+        select.add(baritone);
+        select.add(bells);
+        select.add(churchOrgan);
+        select.add(drum);
+        select.add(clarinet);
+        select.add(eGuitar);
+        select.add(flute);
+        select.add(frenchHorn);
+        select.add(guitar);
+        select.add(harp);
+        select.add(oboe);
+        select.add(ocarina);
+        select.add(piano);
+        select.add(trombone);
+        select.add(tuba);
+        select.add(violin);
+    	
+    }
 	public static Pianel createPianel(int offset, int numKeys) {
         return new Pianel(offset, numKeys);
     }
@@ -369,4 +661,10 @@ public class Pianel extends JFrame implements JMC {
 		this.staff = staff;
 	}
     
+	public void updateInst(int instrument) {
+		
+		staff.getScore().getPhrase().setInstrument(instrument);
+		pianoComponent.getPiano().setInstrument(instrument);
+		
+	}
 }

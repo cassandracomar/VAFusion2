@@ -31,6 +31,7 @@ public class Piano {
 		this.recording = false;
 		ArrayList<vafusion.gui.KeyComponent> blackTemp = new ArrayList<vafusion.gui.KeyComponent>();
 		ArrayList<vafusion.gui.KeyComponent> whiteTemp = new ArrayList<vafusion.gui.KeyComponent>();
+		recordedPhrase.setInstrument(jm.music.data.Phrase.PIANO);
 		
 		if(allKeys[0] == null)
 			generateAllKeys();
@@ -186,4 +187,15 @@ public class Piano {
 		this.recordedPhrase = recordedPhrase;
 	}
 
+	public void setInstrument(int instrument) {
+		
+		this.recordedPhrase.setInstrument(instrument);
+		
+	}
+	
+	public int getInstrument() {
+		
+		return this.recordedPhrase.getInstrument();
+		
+	}
 }
