@@ -85,7 +85,11 @@ public class Measure {
 			//we're golden, add the note directly and return null
 			int width = (int) (staffLineHeight * NOTE_SEPARATION_CONSTANT);//FIXME
 			int height = staffLineHeight;
-			int pos = getPos(n.getPitch());
+			int pos;
+			if(n.isRest())
+				pos = 4;
+			else
+				pos = getPos(n.getPitch());
 			int note = n.getPitchValue();
 			double rhythm = n.getRhythmValue();
 			
@@ -101,7 +105,11 @@ public class Measure {
 			jm.music.data.Note keep = new jm.music.data.Note(n.getPitch(), timeSignature - duration);
 			int width = (int)(staffLineHeight * NOTE_SEPARATION_CONSTANT); // FIXME
 			int height = 6; //FIXME
-			int pos = getPos(n.getPitch()); //FIXME
+			int pos;
+			if(n.isRest())
+				pos = 4;
+			else
+				pos = getPos(n.getPitch());
 			int note = keep.getPitchValue();
 			double rhythm = keep.getRhythmValue();
 			notes.add(new Note(pos, rhythm, !keep.isRest(), getAccidental(n.getPitch())));
