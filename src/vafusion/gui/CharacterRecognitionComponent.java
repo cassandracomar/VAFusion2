@@ -75,7 +75,7 @@ public class CharacterRecognitionComponent extends RecognitionComponent implemen
 			@Override
 			public void mouseDragged(MouseEvent arg0) {
 				
-				if(arg0.getX() <= temp.x + temp.width && arg0.getY() <= temp.y + temp.height 
+				if(arg0.getX() < temp.x + temp.width && arg0.getY() < temp.y + temp.height 
 						&& arg0.getX() >= temp.x && arg0.getY() >= temp.y) {
 					System.out.println("mouse drag (charRecog): x: " + arg0.getX() + " y: " + arg0.getY());
 					System.out.println("component location: x0: " + temp.x + " y0: " + temp.y 
@@ -114,7 +114,7 @@ public class CharacterRecognitionComponent extends RecognitionComponent implemen
 			public void mousePressed(MouseEvent arg0) {
 				
 				
-				if(arg0.getX() <= temp.x + temp.width && arg0.getY() <= temp.y + temp.height 
+				if(arg0.getX() < temp.x + temp.width && arg0.getY() < temp.y + temp.height 
 						&& arg0.getX() >= temp.x && arg0.getY() >= temp.y) {
 					System.out.println("mouse press (charRecog): x: " + arg0.getX() + " y: " + arg0.getY());
 					System.out.println("component location: x0: " + temp.x + " y0: " + temp.y 
@@ -166,7 +166,7 @@ public class CharacterRecognitionComponent extends RecognitionComponent implemen
 			for(int y = 0; y < height; y++)				
 				if(pixels[x][y] != 0) {
 					//System.out.println("draw point (char recog): x: " + x + " y: " + y);
-					g2d.fillOval(x + 10, y - 10, 10, 10);
+					g2d.fillOval(x, y, 10, 10);
 					//g2d.draw(new Line2D.Double(x + this.x, y + this.y, x + this.x + 1, y + this.y + 1));
 				}
 		
