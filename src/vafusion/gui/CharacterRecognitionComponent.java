@@ -7,11 +7,7 @@ import java.awt.Graphics2D;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.event.MouseMotionListener;
-import java.awt.geom.Line2D;
 import java.awt.image.BufferedImage;
-
-import jm.music.data.Note;
-
 import vafusion.data.Score;
 import vafusion.recog.CharacterRecognizer;
 
@@ -24,6 +20,7 @@ public class CharacterRecognitionComponent extends RecognitionComponent implemen
 	long time = System.currentTimeMillis();
 	CharacterRecognizer charRecog;
 
+	@SuppressWarnings("unused")
 	private Score score;
 	public CharacterRecognitionComponent(int xOff, int yOff, Score s) {
 		

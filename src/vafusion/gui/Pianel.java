@@ -4,20 +4,22 @@ package vafusion.gui;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.beans.PropertyChangeListener;
 import java.util.HashMap;
 
+import javax.swing.Action;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JFrame;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
+import javax.swing.JRadioButtonMenuItem;
 import javax.swing.SpringLayout;
 
 import jm.JMC;
 import jm.music.data.Phrase;
 import jm.music.data.Score;
-import jm.util.View;
 import jm.util.Write;
 
 @SuppressWarnings("serial")
@@ -311,6 +313,20 @@ public class Pianel extends JFrame implements JMC {
 			}
         });
         
+        
+        JRadioButtonMenuItem altoSax = new JRadioButtonMenuItem("Alto Sax");
+        JRadioButtonMenuItem bagPipes = new JRadioButtonMenuItem("Bag Pipes");
+        JRadioButtonMenuItem banjo = new JRadioButtonMenuItem("Banjo");
+        JRadioButtonMenuItem bass = new JRadioButtonMenuItem("Bass");
+        JRadioButtonMenuItem bassoon = new JRadioButtonMenuItem("Bassoon");
+        JRadioButtonMenuItem baritone = new JRadioButtonMenuItem("Baritone");
+        
+        
+        select.add(altoSax);
+        select.add(bagPipes);
+        select.add(banjo);
+        select.add(bass);
+        select.add(bassoon);
         
         file.add(clear);
         file.add(save);
