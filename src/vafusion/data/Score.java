@@ -121,6 +121,8 @@ public class Score {
 	 */
 	public void drawNotes() {
 		
+		for(Staff s : staves)
+			s.clearMeasures();
 		List<Note> remainingNotes = new LinkedList<Note>();
 		remainingNotes.addAll(notes.getAll());
 		List<Measure> measures = new ArrayList<Measure>();
@@ -167,18 +169,16 @@ public class Score {
 	}
 
 	public vafusion.music.Note getNoteAtPos(Point p) {
-		//stuff the staves with notes
-		this.drawNotes();
 		
 		//first figure out which staff we need
 		vafusion.music.Note n = null;
 		for(Staff staff : staves) {
-			if(p.y >= staff.getY() && p.y <= staff.getY() + staff.getHeight())
+			if(p.y >= staff.getY() && p.y <= staff.getY() + staff.getHeight()) {
+				this.drawNotes(); //make sure the staff has been stuffed
 				n = staff.getNote(p.x);
+			}
+			
 		}
-		
-		for(Staff staff : staves)
-			staff.clearMeasures();
 		
 		//should never get here, but...
 		return n;

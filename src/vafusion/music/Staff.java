@@ -14,7 +14,7 @@ import javax.imageio.ImageIO;
 public class Staff {
 	private Line2D.Double[] lines;
 	private Graphics2D g2d;
-	private List<Measure> measures;
+	private List<Measure> measures, measureBackup;
 	private int width, height, x, y;
 	private vafusion.data.Line staffData;
 	private BufferedImage clef;
@@ -49,6 +49,7 @@ public class Staff {
 		}
 		
 		measures = new ArrayList<Measure>();
+		measureBackup = new ArrayList<Measure>();
 		
 	}
 	
@@ -64,8 +65,6 @@ public class Staff {
 		
 		for(Measure m : measures)
 			m.paint(g2d);
-		
-		measures.clear();
 		
 	}
 	
@@ -135,21 +134,41 @@ public class Staff {
 		
 	}
 	
-	public vafusion.music.Note getNote(int x) {
+	public synchronized vafusion.music.Note getNote(int x) {
 		
 		System.out.println("Staff.getNote x: " + x);
+
+		List<Measure> measureList = measures.size() == 0 ? measureBackup : measures;
+		if(measureBackup.size() == 0)
+			System.out.println("WHYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYY");
+		System.out.println("Measures size: " + measureList.size());
 		//figure out which measure the note is in
-		for(Measure m : measures)
+		for(Measure m : measureList){
+			System.out.println("measure: x1: " + m.getX() + " x2: " + (m.getX() + m.getWidth()));
 			if(x >= m.getX() && x <= m.getX() + m.getWidth())
 				return m.getNote(x);
+		}
 		
 		return null;
 		
 	}
 
-	public void clearMeasures() {
+	public synchronized void clearMeasures() {
 		
-		measures.clear();
+		if(measures.size() != 0) {
+			
+			//measureBackup.clear();
+			measureBackup.addAll(measures);
+			measures.clear();
+			System.out.println("Clearing measures..." + measureBackup.size());
+			
+		}
+		
+	}
+	
+	public int numMeasures() {
+		
+		return measures.size();
 		
 	}
 }

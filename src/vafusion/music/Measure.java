@@ -18,8 +18,9 @@ public class Measure {
 	private int denom = 4;
 	private double timeSignature;
 	private double duration = 0;
+	@SuppressWarnings("unused")
 	private int x, y, width, height;
-	private int noteSeparation;
+	private int noteSeparation, staffLineHeight;
 	public static double NOTE_SEPARATION_CONSTANT = 4.25;
 	
 	protected enum Clef {TREBLE, BASS};
@@ -48,6 +49,7 @@ public class Measure {
 		this.bassPositionsFlat = initBassPositionsFlat();
 		this.treblePositionsSharp = initTreblePositionsSharp();
 		this.bassPositionsSharp = initBassPositionsSharp();
+		this.staffLineHeight = lineSeparation;
 		this.noteSeparation = (int)(NOTE_SEPARATION_CONSTANT * lineSeparation);
 		
 		notes = new LinkedList<Note>();
@@ -189,13 +191,15 @@ public class Measure {
 	
 	public int getWidth() {
 		
-		return width;
+		return width = (int)(notes.size() * NOTE_SEPARATION_CONSTANT * staffLineHeight + (notes.size() + 1) * noteSeparation) / 2 + 5;
 		
 	}
 	
 	public void paint(Graphics g) {
 		
 		Graphics2D g2d = (Graphics2D)g;
+		
+		//FIXME: Add vertical lines for measure + plus ties, etc.
 		
 		for(Note n : notes){
 			n.paint(g2d);
@@ -204,7 +208,7 @@ public class Measure {
 		
 		g2d.setColor(Color.BLACK);
 		System.out.println("Measure line: x1: " + (this.x + this.getWidth()) + " y1: " + this.y + " y2: " + (this.y + this.height));
-		g2d.fillRect(this.x + this.getWidth() - 5, this.y, 3, this.height); //FIXME doesn't work...why not?
+		g2d.fillRect(this.x + this.getWidth() - 5, this.y, 3, this.height);
 		
 		
 	}
