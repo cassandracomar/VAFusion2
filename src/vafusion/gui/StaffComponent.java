@@ -5,7 +5,6 @@ import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
-import java.io.IOException;
 import java.util.ArrayList;
 
 import javax.swing.JComponent;
@@ -62,6 +61,8 @@ public class StaffComponent extends JComponent{
 	}
 	
 	public void paint(Graphics g){
+		this.x = getX();
+		this.y = getY();
 
 		Graphics2D g2d = (Graphics2D)g;
 		g2d.setColor(Color.WHITE);

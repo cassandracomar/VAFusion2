@@ -4,8 +4,6 @@ package vafusion.gui;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.event.MouseEvent;
-import java.awt.event.MouseListener;
 import java.util.HashMap;
 
 import javax.swing.JButton;
@@ -17,13 +15,10 @@ import javax.swing.JMenuItem;
 import javax.swing.SpringLayout;
 
 import jm.JMC;
-import jm.music.data.Note;
 import jm.music.data.Phrase;
 import jm.music.data.Score;
-import jm.util.Play;
 import jm.util.View;
 import jm.util.Write;
-import vafusion.inst.PluckInst;
 
 @SuppressWarnings("serial")
 public class Pianel extends JFrame implements JMC {
@@ -39,8 +34,10 @@ public class Pianel extends JFrame implements JMC {
     PianoComponent pianoComponent;
     public StaffComponent staff;
     public CharacterRecognitionComponent charRecog;
-    private Phrase wholePhrase;
-    private int offset, xOffset, yOffset;
+    @SuppressWarnings("unused")
+	private Phrase wholePhrase;
+    @SuppressWarnings("unused")
+	private int offset, xOffset, yOffset;
     boolean blackPattern[] = {true, true, false, true, true, true, false, false};
     double twoThirds = (double)2/3;
     double oneThird = (double)1/3;

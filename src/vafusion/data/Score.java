@@ -1,9 +1,6 @@
 package vafusion.data;
 
-import java.awt.Color;
-import java.awt.Graphics2D;
 import java.awt.Point;
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
@@ -20,8 +17,8 @@ public class Score {
 	private boolean defaultFlat;
 //	private jm.music.data.Part[] parts;
 //	private int currentPart;
-	private int num;
-	private int denom;
+//	private int num;
+//	private int denom;
 	private List<Staff> staves;
 	protected enum Clef {TREBLE, BASS};
 	Phrase notes;
@@ -35,8 +32,8 @@ public class Score {
 		this.defaultFlat = true;
 		this.numLines = numLines;
 		staves = new ArrayList<Staff>();
-		this.num = 4;
-		this.denom = 4;
+//		this.num = 4;
+//		this.denom = 4;
 		notes = new Phrase();
 		
 		int betweenSpace = ((height / numLines + 1) / 5) * 2;
