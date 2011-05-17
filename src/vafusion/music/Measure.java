@@ -21,7 +21,7 @@ public class Measure {
 	private double duration = 0;
 	private int x, y, width, height;
 	private int noteSeparation, staffLineHeight;
-	public static double NOTE_SEPARATION_CONSTANT = 3.5;
+	public static double NOTE_SEPARATION_CONSTANT = 4.25;
 	
 	protected enum Clef {TREBLE, BASS};
 	private Clef clef;

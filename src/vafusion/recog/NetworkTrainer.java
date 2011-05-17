@@ -9,6 +9,7 @@ import java.util.Arrays;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Scanner;
 import java.util.Set;
 import java.util.Vector;
 import javax.swing.JFrame;
@@ -86,10 +87,10 @@ public class NetworkTrainer extends JFrame {
 		Vector<Integer> layerCounts = new Vector<Integer>();
 		layerCounts.add(100);
 		
-//		NeuralNetwork nnet = OcrHelper.createNewNeuralNetwork("CharacterRecognizer", size, ColorMode.BLACK_AND_WHITE, 
-//				Character.getCharacters(), layerCounts , TransferFunctionType.TANH);
+		NeuralNetwork nnet = OcrHelper.createNewNeuralNetwork("CharacterRecognizer", size, ColorMode.BLACK_AND_WHITE, 
+				Character.getCharacters(), layerCounts , TransferFunctionType.TANH);
 		
-		NeuralNetwork nnet = NeuralNetwork.load(filename);
+//		NeuralNetwork nnet = NeuralNetwork.load(filename);
 		
 		System.out.println(nnet.getInputNeurons().size());
 		
@@ -99,9 +100,24 @@ public class NetworkTrainer extends JFrame {
 		
 		System.out.println(trainingSets.size());
 		
-//		nnet.initializeWeights(-100, 100);
+		nnet.initializeWeights(-100, 100);
 		
-		for(int i = 0; i < 20; i++) {
+		final Temp b = new Temp();
+		Thread w = new Thread(new Runnable() {
+			
+			@Override
+			public void run() {
+				
+				Scanner in = new Scanner(System.in);
+				in.nextLine();
+				System.out.println("stopping after the next pass");
+				b.running = false;
+				
+			}
+		});
+		w.start();
+		int i = 0;
+		while(b.running) {
 			System.out.println("Pass: " + (i + 1));
 			Set<Thread> threadList = new HashSet<Thread>();
 			System.out.println("Spawning training threads.");
@@ -134,9 +150,16 @@ public class NetworkTrainer extends JFrame {
 					System.out.println("Finished count: " + (oldCount = finishedList.size()));
 				
 			}
+			i++;
 		}
 
-//		nnet.save(filename);
+		nnet.save(filename);
+		
+	}
+	
+	static class Temp {
+		
+		boolean running = true;
 		
 	}
 
