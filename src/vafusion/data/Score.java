@@ -2,6 +2,7 @@ package vafusion.data;
 
 import java.awt.Color;
 import java.awt.Graphics2D;
+import java.awt.Point;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.LinkedList;
@@ -166,5 +167,23 @@ public class Score {
 			s.update();
 			
 		
+	}
+
+	public vafusion.music.Note getNoteAtPos(Point p) {
+		//stuff the staves with notes
+		this.drawNotes();
+		
+		//first figure out which staff we need
+		vafusion.music.Note n = null;
+		for(Staff staff : staves) {
+			if(p.y >= staff.getY() && p.y <= staff.getY() + staff.getHeight())
+				n = staff.getNote(p.x);
+		}
+		
+		for(Staff staff : staves)
+			staff.clearMeasures();
+		
+		//should never get here, but...
+		return n;
 	}
 }
