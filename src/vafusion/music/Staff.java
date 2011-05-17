@@ -114,5 +114,46 @@ public class Staff {
 		return image;
 	}
 	
+	public int getX() {
+		
+		return this.x;
+		
+	}
+	
+	public int getY() {
+		
+		return this.y;
+		
+	}
+	
+	public int getWidth() {
+		
+		return width;
+		
+	}
+	
+	public int getHeight() {
+		
+		return height;
+		
+	}
+	
+	public vafusion.music.Note getNote(int x) {
+		
+		System.out.println("Staff.getNote x: " + x);
+		//figure out which measure the note is in
+		for(Measure m : measures)
+			if(x >= m.getX() && x <= m.getX() + m.getWidth())
+				return m.getNote(x);
+		
+		return null;
+		
+	}
+
+	public void clearMeasures() {
+		
+		measures.clear();
+		
+	}
 }
 

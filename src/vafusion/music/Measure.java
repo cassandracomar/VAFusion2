@@ -357,4 +357,21 @@ public class Measure {
 		
 		return range;
 	}
+	
+	public int getX() {
+		
+		return x;
+		
+	}
+	
+	public Note getNote(int x) {
+		
+		System.out.println("Measure.getNote x: " + x);
+		for(Note n : notes)
+			if(x >= n.getX() && x <= n.getX() + n.getWidth())
+				return n;
+		
+		return null;
+		
+	}
 }
