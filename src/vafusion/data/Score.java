@@ -165,6 +165,34 @@ public class Score {
 			}
 			measures.add(m);
 			
+			if(remainder != null && remainingNotes.size() == 0) {
+				
+				m = new Measure(1, defaultFlat, staves.get(staffIndex).getLineSeparation());
+				m.addNote(remainder);
+				remainder = null;
+				
+				if(!staves.get(staffIndex).addMeasure(m)) {
+					
+					//add to the next line if possible
+					if(!(staffIndex < staves.size() - 1)) {//need to add a new staff...
+						System.out.println("Adding new staff!");
+						int betweenSpace = ((height / numLines + 1) / 5) * 2;
+						int fromTop = betweenSpace;
+						int staffHeight = (height - betweenSpace * (numLines - 1) - fromTop * 2) / numLines;
+						
+						int leftPadding = (int)(width * 0.025);
+						
+						staves.add(new Staff(x + leftPadding, y + staffHeight * (staves.size()) + 
+								(betweenSpace * staves.size()) + fromTop, width - leftPadding * 2, staffHeight, 1));
+
+					}
+					staves.get(++staffIndex).addMeasure(m);
+					
+				}
+				measures.add(m);
+				
+			}
+			
 		}
 		
 		for(Staff s : staves)

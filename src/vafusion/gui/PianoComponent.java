@@ -123,9 +123,8 @@ public class PianoComponent extends JComponent{
 		    CPhrase chord = new CPhrase();
 		    chord.addChord(piano.getCurrentChord().toArray(new Note[0]));
 		    Part p = new Part("Piano", 0, 0);
-		    p.addCPhrase(chord);
-		    Instrument[] insts = new PluckInst[1];
-		    insts[0] = new PluckInst(2000);	            
+		    p.setInstrument(piano.getInstrument());
+		    p.addCPhrase(chord);            
 		    Score s = new Score(p);
 		    
 		    try {

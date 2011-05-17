@@ -9,6 +9,7 @@ import jm.music.data.Note;
 public class Phrase {
 
 	List<Note> notes;
+	int instrument = jm.music.data.Phrase.PIANO;
 	
 	public Phrase() {
 		
@@ -20,6 +21,7 @@ public class Phrase {
 		
 		this();
 		notes.addAll(phrase.getNoteList());
+		instrument = phrase.getInstrument();
 		
 	}
 	
@@ -32,7 +34,22 @@ public class Phrase {
 	
 	public jm.music.data.Phrase getJMPhrase() {
 		
-		return new jm.music.data.Phrase(notes.toArray(new Note[0]));
+		jm.music.data.Phrase p = new jm.music.data.Phrase(notes.toArray(new Note[0]));
+		p.setInstrument(instrument);
+		
+		return p;
+		
+	}
+	
+	public int getInstrument() {
+		
+		return instrument;
+		
+	}
+	
+	public void setInstrument(int instrument) {
+		
+		this.instrument = instrument;
 		
 	}
 	
@@ -98,7 +115,9 @@ public class Phrase {
 	
 	public jm.music.data.Phrase getRange(int pos, int endPos) {
 		
-		return new jm.music.data.Phrase(notes.subList(pos, endPos).toArray(new Note[0]));
+		jm.music.data.Phrase p = new jm.music.data.Phrase(notes.subList(pos, endPos).toArray(new Note[0]));
+		p.setInstrument(instrument);
+		return p;
 		
 	}
 	
