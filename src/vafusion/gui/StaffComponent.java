@@ -32,11 +32,9 @@ public class StaffComponent extends JComponent{
 		g2d.setColor(Color.BLACK);
 		g2d.drawRect(score.getX(), score.getY()+5, score.getWidth(), score.getHeight());
 
-		try {
-			score.drawNotes();
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
+		
+		score.drawNotes();
+		
 		
 		for(Staff staff: score.getStaves())			
 			staff.paint(g2d);

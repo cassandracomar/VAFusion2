@@ -121,7 +121,7 @@ public class Score {
 	 * measure width = number of notes * 2.5 * staffLineSeparation + (numberofnotes +1)*width between notes
 	 * 
 	 */
-	public void drawNotes() throws IOException{
+	public void drawNotes() {
 		
 		List<Note> remainingNotes = new LinkedList<Note>();
 		remainingNotes.addAll(notes.getAll());
