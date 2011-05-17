@@ -22,7 +22,7 @@ public class Staff {
 	private static BufferedImage treble;
 	
 	public Staff(int x, int y, int width, int height, int clef){
-		this.lines = new Line2D.Double[5];
+		this.lines = new Line2D.Double[6];
 		this.width = width;
 		this.height = height;
 		staffData = new vafusion.data.Line(x, y, width, height, clef);
@@ -32,6 +32,8 @@ public class Staff {
 		for(int i = 0; i< 5; i ++){
 			this.lines[i] = new Line2D.Double(x, y + (height/5)*i, x + width, y + (height/5)*i);
 		}
+		
+		this.lines[5] = new Line2D.Double(x+width, y, x + width, y + (height/5) * 4);
 		
 		if(bass == null){
 			try {
