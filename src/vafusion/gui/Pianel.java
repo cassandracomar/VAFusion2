@@ -345,7 +345,7 @@ public class Pianel extends JFrame implements JMC {
 //					    }
 //					}
 				
-				Play.midi(pianoComponent.getPiano().getRecordedScore(), false);
+				Play.midi(pianoComponent.getPiano().getRecordedPhrase(), false);
 			}
         });
         

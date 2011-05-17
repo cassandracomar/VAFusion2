@@ -48,8 +48,10 @@ public class KeyComponent extends JComponent{
 		key.setPressed(true);
 		((PianoComponent) this.getParent()).getPiano().getCurrentChord().add(new Note(key.getNote() , ((PianoComponent) this.getParent()).getPiano().getCurrentRhythm()));
 		
-		if(((PianoComponent)getParent()).getPiano().isRecording())
+		if(((PianoComponent)getParent()).getPiano().isRecording()){
 			((PianoComponent)this.getParent()).getScore().addNote(new Note(key.getNote() , ((PianoComponent) this.getParent()).getPiano().getCurrentRhythm()));
+			((PianoComponent)this.getParent()).getPiano().getRecordedPhrase().add(new Note(key.getNote() , ((PianoComponent) this.getParent()).getPiano().getCurrentRhythm()));
+		}
 		this.repaint();
 		this.getParent().repaint();
 	}
