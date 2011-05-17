@@ -38,7 +38,8 @@ public class Score {
 		
 		int betweenSpace = ((height / numLines + 1) / 5) * 2;
 		int fromTop = betweenSpace;
-		int staffHeight = (height - betweenSpace * (numLines - 1) - fromTop * 2) / numLines;
+//		int staffHeight = (height - betweenSpace * (numLines - 1) - fromTop * 2) / numLines;
+		int staffHeight = 30;
 		
 		int leftPadding = (int)(width * 0.025);
 		
