@@ -249,8 +249,6 @@ public class Pianel extends JFrame implements JMC {
 //	        staff.getScore().addNote(new jm.music.data.Note(70, 4));
 //        }
         
-        this.pianoComponent.setBounds(20, 0, width, height/2);
-        this.staff.setBounds(20, 50, width, height /2);
         this.charRecog.setBounds(charRecog.getRealX(), charRecog.getRealY(), 512, 147);
         makeRecordingButton();
         makeScoreButton();
@@ -286,6 +284,9 @@ public class Pianel extends JFrame implements JMC {
         
         JMenuItem clear = new JMenuItem("Clear");
         JMenuItem save = new JMenuItem("Save to Midi");
+        JMenuItem load = new JMenuItem("Load from Midi");
+        JMenuItem select = new JMenuItem("Select Instrument");
+        JMenuItem range = new JMenuItem("Set Piano Range");
         clear.addActionListener(new ActionListener() {
 
 			@Override
@@ -302,9 +303,20 @@ public class Pianel extends JFrame implements JMC {
 			}
         });
         
+        load.addActionListener(new ActionListener() {
+
+			@Override
+			public void actionPerformed(ActionEvent arg0) {
+//				Write.midi(pianoComponent.getPiano().getRecordedScore(), "Untitled Score.midi");
+			}
+        });
+        
         
         file.add(clear);
         file.add(save);
+        file.add(load);
+        music.add(select);
+        music.add(range);
         
 
 //        menuBar.setBounds(0, 0, 967, 30);

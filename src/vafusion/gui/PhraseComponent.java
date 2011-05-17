@@ -28,16 +28,12 @@ public class PhraseComponent extends JComponent{
 
 		Graphics2D g2d = (Graphics2D)g;
 		g2d.setColor(Color.WHITE);
-		g2d.fillRect(score.getX(), score.getY()+5, score.getWidth(), score.getHeight());
+		g2d.fillRect(x, y, width, height);
 		
 		g2d.setColor(Color.BLACK);
-		g2d.drawRect(score.getX(), score.getY()+5, score.getWidth(), score.getHeight());
+		g2d.drawRect(x, y, width, height);
 
-		try {
-			score.drawNotes();
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
+		score.drawNotes();
 		
 		for(Staff staff: score.getStaves())			
 			staff.paint(g2d);
