@@ -21,7 +21,7 @@ public class Measure {
 	private double duration = 0;
 	private int x, y, width, height;
 	private int noteSeparation, staffLineHeight;
-	public static double NOTE_SEPARATION_CONSTANT = 3.5;
+	public static double NOTE_SEPARATION_CONSTANT = 4.25;
 	
 	protected enum Clef {TREBLE, BASS};
 	private Clef clef;
@@ -85,7 +85,11 @@ public class Measure {
 			//we're golden, add the note directly and return null
 			int width = (int) (staffLineHeight * NOTE_SEPARATION_CONSTANT);//FIXME
 			int height = staffLineHeight;
-			int pos = getPos(n.getPitch());
+			int pos;
+			if(n.isRest())
+				pos = 4;
+			else
+				pos = getPos(n.getPitch());
 			int note = n.getPitchValue();
 			double rhythm = n.getRhythmValue();
 			
@@ -101,7 +105,11 @@ public class Measure {
 			jm.music.data.Note keep = new jm.music.data.Note(n.getPitch(), timeSignature - duration);
 			int width = (int)(staffLineHeight * NOTE_SEPARATION_CONSTANT); // FIXME
 			int height = 6; //FIXME
-			int pos = getPos(n.getPitch()); //FIXME
+			int pos;
+			if(n.isRest())
+				pos = 4;
+			else
+				pos = getPos(n.getPitch());
 			int note = keep.getPitchValue();
 			double rhythm = keep.getRhythmValue();
 			notes.add(new Note(pos, rhythm, !keep.isRest(), getAccidental(n.getPitch())));
@@ -188,7 +196,7 @@ public class Measure {
 	
 	public int getWidth() {
 		
-		return (int)(notes.size() * NOTE_SEPARATION_CONSTANT * staffLineHeight + (notes.size() + 1) * noteSeparation) / 2 + 5;
+		return width = (int)(notes.size() * NOTE_SEPARATION_CONSTANT * staffLineHeight + (notes.size() + 1) * noteSeparation) / 2 + 5;
 		
 	}
 	
@@ -204,7 +212,8 @@ public class Measure {
 		}
 		
 		g2d.setColor(Color.BLACK);
-		g2d.fillRect(this.x + this.getWidth(), this.y, 10, this.height);
+		System.out.println("Measure line: x1: " + (this.x + this.getWidth()) + " y1: " + this.y + " y2: " + (this.y + this.height));
+		g2d.fillRect(this.x + this.getWidth() - 5, this.y, 3, this.height);
 		
 		
 	}
