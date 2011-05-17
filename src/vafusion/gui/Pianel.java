@@ -22,13 +22,11 @@ import jm.util.Write;
 
 @SuppressWarnings("serial")
 public class Pianel extends JFrame implements JMC {
-    
+
     public static void main(String args[]) throws InterruptedException {
-    
-        Pianel pianel = new Pianel(0, 8);
+    	Pianel pianel = new Pianel(0, 8);
         while(pianel.running) Thread.sleep(1000);
         pianel.shutdown();
-    
     }
 
     PianoComponent pianoComponent;
@@ -38,11 +36,14 @@ public class Pianel extends JFrame implements JMC {
 	private Phrase wholePhrase;
     @SuppressWarnings("unused")
 	private int offset, xOffset, yOffset;
+    public PhraseComponent phrase;
     boolean blackPattern[] = {true, true, false, true, true, true, false, false};
     double twoThirds = (double)2/3;
     double oneThird = (double)1/3;
     boolean running = true;
     JMenuBar menuBar;
+    boolean piano = true;
+    
     
     Score recordedScore = new Score();
     Phrase recordedPhrase = new Phrase();
@@ -85,20 +86,34 @@ public class Pianel extends JFrame implements JMC {
 		pianoComponent.getPiano().getRecordedScore().createPart();
         
         showScore = new JButton();
-        showScore.setText("Show Piece");
+        showScore.setText("Switch Views");
         showScore.addActionListener(new ActionListener() {
 			
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				
-				System.out.println(recordedScore);
-				View.show(pianoComponent.getPiano().getRecordedScore());
-				Write.midi(pianoComponent.getPiano().getRecordedScore(), "Untitled Score.midi");
-				
+				if(piano){
+					//switch to phrase view and character recognition
+					getContentPane().add(charRecog);
+					getContentPane().add(phrase);
+					getContentPane().remove(pianoComponent);
+					repaintMe();
+					piano = false;
+				}else{
+					//switch to piano
+					getContentPane().remove(charRecog);
+					getContentPane().remove(phrase);
+					getContentPane().add(pianoComponent);
+					repaintMe();
+					piano = true;
+				}
 			}
 			
 		});
 		
+	}
+	
+	void repaintMe(){
+		this.repaint();
 	}
 	
 	void prepRhythms() {
@@ -133,10 +148,11 @@ public class Pianel extends JFrame implements JMC {
         // Add a component with a custom paint method
         this.getContentPane().setLayout(spring);
         
+        getContentPane().add(menuBar, null);
+        
         getContentPane().add(recordingButton);
         getContentPane().add(rhythmSelector);
         getContentPane().add(showScore);
-        //getContentPane().add(piano);
         getContentPane().add(pianoComponent);
         getContentPane().add(staff);
         getContentPane().add(charRecog);
@@ -170,26 +186,33 @@ public class Pianel extends JFrame implements JMC {
     Pianel(int offset, int numKeys) {
         super();
         int height = 575, width = 967;
-        this.xOffset = 20;
+        this.xOffset = 0;
         this.yOffset = 0;
         this.offset = offset;
         
+        menuBar = this.getJMenuBar();
+        menuBar = menuBar == null ? new JMenuBar() : menuBar;
+        
         setupMenuBar();
         this.setJMenuBar(menuBar);
+//        menuBar.setVisible(true);
         
         
-        int anotherOffset = 25; // arbitrary num to make room for buttons
+        int anotherOffset = 30; // arbitrary num to make room for buttons
         
         this.wholePhrase = new Phrase();
         //this.piano = new Piano(height/2, width, numKeys);
-        this.pianoComponent = new PianoComponent(xOffset, yOffset, width, height / 2 - anotherOffset/2, this);
+        this.pianoComponent = new PianoComponent(xOffset, yOffset, width, height / 2 - anotherOffset, this);
         //this.pianoComponent.setBounds(xOffset, yOffset, width, height/2);
+        this.phrase = new PhraseComponent(0, 0, width / 2, height / 2 - anotherOffset / 2);
         yOffset += 50;
-        this.staff = new StaffComponent(xOffset, yOffset + height/2, width, height / 2 - anotherOffset/2);
+        this.staff = new StaffComponent(xOffset, (int) (yOffset + height/2 - anotherOffset * 3), width, height / 2 - anotherOffset/2);
         this.pianoComponent.setScore(this.staff.getScore());
         xOffset += staff.getRealWidth() + 40;
         yOffset += height / 2;
-        this.charRecog = new CharacterRecognitionComponent(xOffset, yOffset, staff.getScore());
+        this.charRecog = new CharacterRecognitionComponent(0, 0, staff.getScore());
+//        this.charRecog = new CharacterRecognitionComponent((int) (width * 0.625), (int) (height * .125), staff.getScore());
+      this.charRecog.setBounds((int) (width * 0.7), (int) (height * .125), 512, 147);
         
 //        if(true) {
 //	        staff.getScore().addNote(new jm.music.data.Note(70, 4));
@@ -229,6 +252,12 @@ public class Pianel extends JFrame implements JMC {
         this.pianoComponent.setBounds(20, 0, width, height/2);
         this.staff.setBounds(20, 50, width, height /2);
         this.charRecog.setBounds(charRecog.getRealX(), charRecog.getRealY(), 512, 147);
+//        this.pianoComponent.setBounds(20, 0, width, height/2);
+//        this.staff.setBounds(20, 50, width, height /2);
+//        this.pianoComponent.setBounds(0, 0, width, height/2);
+//        this.staff.setBounds(0, 0, width, height /2);
+        
+//        this.charRecog.setBounds(60 + staff.getWidth(), 110 + height / 2, 512, 147);
         makeRecordingButton();
         makeScoreButton();
         prepRhythms();
@@ -250,8 +279,7 @@ public class Pianel extends JFrame implements JMC {
         int frameHeight = 575;
         this.setSize(frameWidth, frameHeight);
         this.setVisible(true);
-        this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);	
-        
+        this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
        
     }
 
@@ -262,30 +290,29 @@ public class Pianel extends JFrame implements JMC {
         JMenu music = new JMenu("Music");
         
         JMenuItem clear = new JMenuItem("Clear");
+        JMenuItem save = new JMenuItem("Save to Midi");
         clear.addActionListener(new ActionListener() {
 
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
 				
-				if(!pianoComponent.getPiano().isRecording()) {
-					
-					pianoComponent.getPiano().setRecording(true);
-					recordingButton.setText("Stop");
-					pianoComponent.getPiano().setRecordedPhrase(new Phrase());
-				
-					
-				} else {
-					
-					pianoComponent.getPiano().setRecording(false);
-					recordingButton.setText("Record");
-					if(pianoComponent.getPiano().getRecordedPhrase().getSize() != 0)
-						pianoComponent.getPiano().getRecordedScore().getPart(0).add(pianoComponent.getPiano().getRecordedPhrase());
-					
-				}	
 			}
         });
         
+        save.addActionListener(new ActionListener() {
+
+			@Override
+			public void actionPerformed(ActionEvent arg0) {
+				Write.midi(pianoComponent.getPiano().getRecordedScore(), "Untitled Score.midi");
+			}
+        });
+        
+        
         file.add(clear);
+        file.add(save);
+        
+
+//        menuBar.setBounds(0, 0, 967, 30);
 
         this.menuBar.add(file);
         this.menuBar.add(music);
