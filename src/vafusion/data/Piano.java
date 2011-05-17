@@ -3,6 +3,7 @@ package vafusion.data;
 import java.util.ArrayList;
 import java.util.HashSet;
 
+import jm.audio.Instrument;
 import jm.music.data.Note;
 import jm.music.data.Phrase;
 import jm.music.data.Score;

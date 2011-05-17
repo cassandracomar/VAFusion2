@@ -19,8 +19,13 @@ import javax.swing.JRadioButtonMenuItem;
 import javax.swing.SpringLayout;
 
 import jm.JMC;
+import jm.audio.Instrument;
+import jm.music.data.CPhrase;
+import jm.music.data.Note;
+import jm.music.data.Part;
 import jm.music.data.Phrase;
 import jm.music.data.Score;
+import jm.util.Play;
 import jm.util.Write;
 
 @SuppressWarnings("serial")
@@ -50,7 +55,7 @@ public class Pianel extends JFrame implements JMC {
     
     Score recordedScore = new Score();
     Phrase recordedPhrase = new Phrase();
-	private JButton recordingButton, showScore;
+	private JButton recordingButton, showScore, playButton;
 	boolean recording;
 	HashMap<String, Double> rhythmMap = new HashMap<String, Double>();
 	JComboBox rhythmSelector;
@@ -83,6 +88,8 @@ public class Pianel extends JFrame implements JMC {
 			}
         });
 	}
+	
+
 	
 	void makeScoreButton() {
 		
@@ -292,6 +299,7 @@ public class Pianel extends JFrame implements JMC {
         JMenu select = new JMenu("Select Instrument");
         JMenuItem range = new JMenuItem("Set Piano Range");
         JMenuItem acc = new JMenuItem("Set Accidental Default");
+        JMenuItem play = new JMenuItem("Play Recorded Phrase");
         clear.addActionListener(new ActionListener() {
 
 			@Override
@@ -304,7 +312,7 @@ public class Pianel extends JFrame implements JMC {
 
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
-				Write.midi(pianoComponent.getPiano().getRecordedScore(), "Untitled Score.midi");
+				Write.midi(pianoComponent.getPiano().getRecordedPhrase(), "Untitled Score.midi");
 			}
         });
         
@@ -316,6 +324,48 @@ public class Pianel extends JFrame implements JMC {
 			}
         });
         
+        play.addActionListener(new ActionListener() {
+
+			@Override
+			public void actionPerformed(ActionEvent arg0) {
+//				if(!pianoComponent.getPiano().getRecordedPhrase().isEmpty()) {
+//				    CPhrase chord = new CPhrase();
+//				    chord.addChord(pianoComponent.getPiano().getRecordedPhrase().toArray(new Note[0]));
+//				    Part p = new Part("Piano", 0, 0);
+//				    p.setInstrument(pianoComponent.getPiano().getInstrument());
+//				    p.addCPhrase(chord);            
+//				    Score s = new Score(p);
+//				    
+//				    try {
+//					    	Play.midi(s, false);
+//					    } catch(IllegalThreadStateException e) {
+//					    	
+////					    	pianoComponent.getPiano().getRecordedPhrase().removeAll(pianoComponent.getPiano().getCurrentChord());
+//					    	
+//					    }
+//					}
+				
+				Play.midi(pianoComponent.getPiano().getRecordedScore(), false);
+			}
+        });
+        
+//    	void makePlayButton() {
+//    		
+//    		playButton = new JButton();
+//            playButton.setText("Play");
+//            playButton.addActionListener(new ActionListener() {
+//
+//    			@Override
+//    			public void actionPerformed(ActionEvent arg0) {
+//    				
+//    				if(!pianoComponent.getPiano().isRecording() && pianoComponent.getPiano().getRecordedPhrase() != null) {
+//    					
+//    					Play.midi(pianoComponent.getPiano().getRecordedPhrase());
+//    				}	
+//    			}
+//            });
+//    	}
+        
         addInstrumentsToMenu(select);
         
         file.add(clear);
@@ -324,6 +374,7 @@ public class Pianel extends JFrame implements JMC {
         music.add(select);
         music.add(range);
         music.add(acc);
+        music.add(play);
         
 
 //        menuBar.setBounds(0, 0, 967, 30);
